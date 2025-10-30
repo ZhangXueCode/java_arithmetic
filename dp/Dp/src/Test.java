@@ -1,5 +1,6 @@
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -361,6 +362,25 @@ public class Test {
             }
         }
         return retCount;
+    }
+    //最长数对链
+    public int findLongestChain(int[][] p) {
+        Arrays.sort(p,(a,b) -> a[0] - b[0]);
+        int n = p.length;
+        int[] dp = new int[n];
+        for (int i = 0; i < n; i++) {
+            dp[i] = 1;
+        }
+        int ret = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if(p[j][1] < p[i][0]) {
+                    dp[i] = Math.max(dp[i],dp[j] + 1);
+                }
+            }
+            ret = Math.max(ret,dp[i]);
+        }
+        return ret;
     }
 
 
