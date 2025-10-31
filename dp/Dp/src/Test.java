@@ -1,9 +1,6 @@
 import org.omg.CORBA.PUBLIC_MEMBER;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Test {
     //地下城
@@ -379,6 +376,17 @@ public class Test {
                 }
             }
             ret = Math.max(ret,dp[i]);
+        }
+        return ret;
+    }
+    //最长定差子序列
+    public int LongestSubsequence(int[] arr,int d) {
+        Map<Integer, Integer> hash = new HashMap<>();
+        int ret = 1;
+        for(int x : arr) {
+            //此处会直接覆盖掉之前出现的x-d值 保证这里拿到的会是最后的值
+            hash.put(x,hash.getOrDefault(x - d,0) + 1);
+            ret = Math.max(ret,hash.get(x));
         }
         return ret;
     }
