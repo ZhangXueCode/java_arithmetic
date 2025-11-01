@@ -391,6 +391,35 @@ public class Test {
         return ret;
     }
 
+    //最长斐波那契子序列
+    public int lenLongestFibSubseq(int[] arr) {
+        Map<Integer,Integer> hash = new HashMap<>();
+        int n = arr.length;
+        int[][] dp = new int[n][n];
+        int ret = 2;
+        for (int i = 0; i < n; i++) {
+            hash.put(arr[i],i);
+            for (int j = 0; j < n; j++) {
+                dp[i][j] = 2;
+            }
+        }
+        for (int j = 2; j < n; j++) {
+            for (int i = 1; i < j; i++) {
+                int a = arr[j] - arr[i];
+                if(a < arr[i] && hash.containsKey(a)) {
+                    int k = hash.get(a);
+                    dp[i][j] = dp[k][i] + 1;
+                }
+                ret = Math.max(ret,dp[i][j]);
+            }
+        }
+        if(ret == 2) {
+            return 0;
+        }
+        return ret;
+
+    }
+
 
 
 
