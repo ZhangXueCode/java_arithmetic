@@ -409,8 +409,8 @@ public class Test {
                 if(a < arr[i] && hash.containsKey(a)) {
                     int k = hash.get(a);
                     dp[i][j] = dp[k][i] + 1;
+                    ret = Math.max(ret,dp[i][j]);
                 }
-                ret = Math.max(ret,dp[i][j]);
             }
         }
         if(ret == 2) {
@@ -419,6 +419,31 @@ public class Test {
         return ret;
 
     }
+    //最长等差数列
+    public int longestArithSeqLength(int[] num) {
+        Map<Integer,Integer> hash = new HashMap<>();
+        int n = num.length;
+        int[][] dp = new int[n][n];
+        int ret = 2;
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = 2;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                dp[i][j] = 2;
+                int a = 2 * num[i] - num[j];
+                if(hash.containsKey(a)) {
+                    int k = hash.get(a);
+                    dp[i][j] = dp[k][i] + 1;
+                    ret = Math.max(ret,dp[i][j]);
+                }
+            }
+            hash.put(num[i],i);
+        }
+        return ret;
+
+    }
+
 
 
 
