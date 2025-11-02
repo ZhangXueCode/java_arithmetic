@@ -52,4 +52,41 @@ public class Test {
         }
         return ret;
     }
+    //消失的两个数
+    public int[] missingTwo(int[] num) {
+        int tmp = 0,n = 0;
+        int a = 0,b = 0;
+        //将所有数异或在一起
+        for(int x : num) {
+            tmp ^= x;
+        }
+        for (int i = 0; i <= num.length + 2; i++) {
+            tmp ^= i;
+        }
+        //找出比特位=1的位置
+        for (int i = 0; i < 32; i++) {
+            if(((tmp >> i) & 1) == 1) {
+                n = i;
+                break;
+            }
+        }
+        //将其分为两组 一组比特位为1异或在一起 另一组比特位为0异或在一起
+        for (int i = 1; i <= num.length + 2; i++) {
+            if(((i >> n) & 1) == 1) {
+                a ^= i;
+            }else {
+                b ^= i;
+            }
+        }
+        for(int x : num) {
+            if(((x >> n) & 1) == 1) {
+                a ^= x;
+            }else {
+                b ^= x;
+            }
+        }
+
+        return new int[]{a,b};
+
+    }
 }
