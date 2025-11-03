@@ -443,6 +443,37 @@ public class Test {
         return ret;
 
     }
+    //等差序列划分
+    public int numberOfArithmeticSlices(int[] num) {
+        int n = num.length;
+        Map<Long,List<Integer>> hash = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            long tmp =(long)num[i];
+            if(!hash.containsKey(tmp)) {
+                hash.put(tmp,new ArrayList<>());
+            }
+            hash.get(tmp).add(i);
+        }
+        int[][] dp = new int[n][n];
+        int sum = 0;
+        for (int j = 2; j < n; j++) {
+            for (int i = 1; i < j; i++) {
+                long a = 2L * num[i] - num[j];
+                if(hash.containsKey(a)) {
+                    for(int x : hash.get(a)) {
+                        if(x < i) {
+                            dp[i][j] += dp[x][i] + 1;
+                        }else {
+                            break;
+                        }
+                    }
+                }
+                sum += dp[i][j];
+            }
+        }
+        return sum;
+
+    }
 
 
 
