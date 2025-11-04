@@ -16,5 +16,18 @@ public class Test {
         return String.valueOf(s);
 
     }
+    //提莫攻击
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        int ret = duration;
+        for (int i = 0; i < timeSeries.length - 1; i++) {
+            if(timeSeries[i + 1] - timeSeries[i] >= duration) {
+                ret += duration;
+            }else {
+                ret += timeSeries[i + 1] - timeSeries[i];
+            }
+        }
+        return ret;
+
+    }
 
 }
