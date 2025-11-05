@@ -499,6 +499,33 @@ public class Test {
         return sum;
 
     }
+    //最长回文子串
+    public String longestPalindrome(String ss) {
+        int n = ss.length();
+        char[] s = ss.toCharArray();
+        boolean[][] dp = new boolean[n][n];
+        int sum = 1,begin = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= i ; j--) {
+                if(s[i] != s[j]) {
+                    dp[i][j] = false;
+                }else {
+                    if(i == j || i + 1 == j) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+                if(dp[i][j] && j - i + 1 > sum) {
+                    sum = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return ss.substring(begin,begin + sum);
+
+    }
+
 
 
 
