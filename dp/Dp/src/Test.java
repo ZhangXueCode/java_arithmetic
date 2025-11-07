@@ -525,6 +525,37 @@ public class Test {
         return ss.substring(begin,begin + sum);
 
     }
+    //回文串分割Ⅳ
+    public boolean checkPartitioning(String ss) {
+        int n = ss.length();
+        char[] s = ss.toCharArray();
+        boolean[][] dp = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= i ; j--) {
+                if(s[i] != s[j]) {
+                    dp[i][j] = false;
+                }else {
+                    if(i == j || i + 1 == j) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+            }
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = i ; j < n - 1; j++) {
+                if(dp[0][i - 1] == true && dp[i][j] == true && dp[j + 1][n - 1] == true) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+
+
+    }
+
 
 
 
