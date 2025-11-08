@@ -491,7 +491,7 @@ public class Test {
                         dp[i][j] = dp[i + 1][j - 1];
                     }
                 }
-                if(dp[i][j] == true) {
+                if(dp[i][j]) {
                     sum++;
                 }
             }
@@ -545,15 +545,40 @@ public class Test {
         }
         for (int i = 1; i < n; i++) {
             for (int j = i ; j < n - 1; j++) {
-                if(dp[0][i - 1] == true && dp[i][j] == true && dp[j + 1][n - 1] == true) {
+                if(dp[0][i - 1] && dp[i][j] && dp[j + 1][n - 1]) {
                     return true;
                 }
             }
         }
         return false;
-
-
-
+    }
+    //分割回文串Ⅱ
+    public int minCut(String s) {
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        int[] dp2 = new int[n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= i; j--) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = i + 1 >= j ? true : dp[i + 1][j - 1];
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            dp2[i] = Integer.MAX_VALUE;
+        }
+        for (int i = 0; i < n; i++) {
+            if(dp[0][i]) {
+                dp2[i] = 0;
+            }else {
+                for (int j = 1; j <= i; j++) {
+                    if(dp[j][i]) {
+                        dp2[i] = Math.min(dp2[j - 1] + 1, dp2[i]);
+                    }
+                }
+            }
+        }
+        return dp2[n - 1];
     }
 
 
