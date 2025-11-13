@@ -33,6 +33,27 @@ public class Test {
         }
         return newHead.next;
     }
+    //两两交换链表中的节点
+    public ListNode swapPairs(ListNode head) {
+        ListNode newHead = new ListNode();
+        newHead.next = head;
+        ListNode pre = newHead;
+        ListNode cur = head;
+        if(head == null) {
+            return null;
+        }
+        while (cur != null && cur.next != null) {
+            ListNode next = cur.next;
+            ListNode nnext = next.next;
+            pre.next = next;
+            next.next = cur;
+            cur.next = nnext;
+            pre = cur;
+            cur = nnext;
+        }
+        return newHead.next;
+
+    }
 
 
 }
