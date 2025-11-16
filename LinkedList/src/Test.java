@@ -54,6 +54,40 @@ public class Test {
         return newHead.next;
 
     }
+    //重排链表
+    public void reorderList(ListNode head) {
+        if(head == null || head.next == null || head.next.next == null) {
+            return;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode cur = slow.next;
+        slow.next = null;
+        ListNode head2 = new ListNode(0);
+        while (cur != null) {
+            ListNode next1 = cur.next;
+            cur.next = head2.next;
+            head2.next = cur;
+            cur =  next1;
+        }
+        ListNode cur1 = head,cur2 = head2.next;
+        ListNode ret = new ListNode(0);
+        ListNode pre = ret;
+        while (cur1 != null) {
+            pre.next = cur1;
+            pre = cur1;
+            cur1 = cur1.next;
+            if(cur2 != null) {
+                pre.next = cur2;
+                pre = cur2;
+                cur2 = cur2.next;
+            }
+        }
+    }
 
 
 }
