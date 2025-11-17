@@ -49,6 +49,18 @@ public class Test {
         head.next = null;
         return newHead;
     }
+    //两两交换链表中的节点
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode tmp = swapPairs(head.next.next);
+        ListNode ret = head.next;
+        head.next.next = head;
+        head.next = tmp;
+        return ret;
+    }
+
 
 
 
