@@ -673,6 +673,33 @@ public class Test {
         return dp[m - 1][n - 1];
 
     }
+    //通配符匹配
+    public boolean isMatch(String s, String p) {
+        s = " " + s;
+        p = " " + p;
+        int m = s.length();
+        int n = p.length();
+        boolean[][] dp = new boolean[m][n];
+        dp[0][0] = true;
+        for (int i = 1; i < n; i++) {
+            if(p.charAt(i) == '*') {
+                dp[0][i] = true;
+            }else {
+                break;
+            }
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (p.charAt(j) == '*') {
+                    dp[i][j] = dp[i][j - 1] || dp[i - 1][j];
+                }else {
+                    dp[i][j] = (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?') && dp[i - 1][j - 1];
+                }
+            }
+        }
+        return dp[m - 1][n - 1];
+
+    }
 
 
 
