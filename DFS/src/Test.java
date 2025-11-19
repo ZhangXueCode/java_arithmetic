@@ -6,6 +6,18 @@ class ListNode {
     ListNode(int val) { this.val = val; }
     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 }
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+      }
+}
 
 public class Test {
     //汉诺塔
@@ -69,6 +81,21 @@ public class Test {
         double tmp = pow(x,n / 2);
         return n % 2 == 0 ? tmp * tmp : tmp * tmp * x;
     }
+    //计算布尔二叉树的值
+    public boolean evaluateTree(TreeNode root) {
+        if(root.left == null) {
+            return root.val == 1;
+        }
+        boolean left = evaluateTree(root.left);
+        boolean right = evaluateTree(root.right);
+        if(root.val == 2) {
+            return left | right;
+        }else {
+            return left & right;
+        }
+
+    }
+
 
 
 
