@@ -109,6 +109,31 @@ public class Test {
         }
         return ret.next;
     }
+    //k个一组反转链表
+    public ListNode reverseKGroup(ListNode head, int k) {
+        int n = 0;
+        ListNode newHead = new ListNode();
+        ListNode cur = head;
+        ListNode pre = newHead;
+        while (cur != null) {
+            n++;
+            cur = cur.next;
+        }
+        n = n / k;
+        cur = head;
+        for (int i = 0; i < n; i++) {
+            ListNode tmp = cur;
+            for (int j = 0; j < k; j++) {
+                ListNode next = cur.next;
+                cur.next = pre.next;
+                pre.next = cur;
+                cur = next;
+            }
+            pre = tmp;
+        }
+        pre.next = cur;
+        return newHead.next;
+    }
 
 
 }
