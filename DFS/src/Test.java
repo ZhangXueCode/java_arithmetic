@@ -95,6 +95,23 @@ public class Test {
         }
 
     }
+    //求根节点到叶子节点数字之和
+    public int sumNumbers(TreeNode root) {
+        return dfs(root,0);
+    }
+    public int dfs(TreeNode root,int preSum) {
+        int sum = preSum * 10 + root.val;
+        if(root.left == null && root.right == null) {
+            return sum;
+        }
+        if(root.left != null && root.right != null) {
+            return dfs(root.left,sum) + dfs(root.right,sum);
+        }
+        if(root.left != null) {
+            return dfs(root.left,sum);
+        }
+        return dfs(root.right,sum);
+    }
 
 
 
