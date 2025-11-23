@@ -124,6 +124,23 @@ public class Test {
         }
         return root;
     }
+    //验证二叉搜索树
+    long pre = Long.MIN_VALUE;
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        boolean left = isValidBST(root.left);
+        boolean cur = false;
+        if(root.val > pre) {
+            cur = true;
+        }
+        pre = root.val;
+        boolean right = isValidBST(root.right);
+        return left && cur && right;
+    }
+
+
 
 
 
