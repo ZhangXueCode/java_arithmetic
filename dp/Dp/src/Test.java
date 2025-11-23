@@ -838,7 +838,41 @@ public class Test {
             }
         }
         return ret;
-
+    }
+    //01背包问题
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int V = in.nextInt();
+        int[] Vi = new int[n + 1];
+        int[] Wi = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            Vi[i] = in.nextInt();
+            Wi[i] = in.nextInt();
+        }
+        int[] dp = new int[V + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = V; j >= Vi[i]; j--) {
+                dp[j] = Math.max(dp[j],dp[j - Vi[i]] + Wi[i]);
+            }
+        }
+        System.out.println(dp[V]);
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= V; j++) {
+                dp[j] = 0;
+            }
+        }
+        for (int i = 1; i <= V; i++) {
+            dp[i] = -1;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = V; j >= Vi[i]; j--) {
+                if(dp[j - Vi[i]] != -1) {
+                    dp[j] = Math.max(dp[j],dp[j - Vi[i]] + Wi[i]);
+                }
+            }
+        }
+        System.out.println(dp[V] == -1 ? 0 : dp[V]);
     }
 
 
