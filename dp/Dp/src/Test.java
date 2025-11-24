@@ -874,6 +874,26 @@ public class Test {
         }
         System.out.println(dp[V] == -1 ? 0 : dp[V]);
     }
+    //分割等和子集
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+        }
+        if(sum % 2 ==1) {
+            return false;
+        }
+        boolean[] dp = new boolean[sum / 2 + 1];
+        dp[0] = true;
+        for (int i = 1; i <= n; i++) {
+            for (int j = sum / 2;j >= nums[i - 1];j--) {
+                dp[j] = dp[j] || dp[j - nums[i - 1]];
+            }
+        }
+        return dp[sum / 2];
+    }
+
 
 
 
