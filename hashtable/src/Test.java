@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Test {
     //两数之和
@@ -33,5 +35,18 @@ public class Test {
         }
         return true;
     }
+    //存在重复元素
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> hash = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if(!hash.contains(nums[i])) {
+                hash.add(nums[i]);
+            }else {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
