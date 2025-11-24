@@ -139,6 +139,27 @@ public class Test {
         boolean right = isValidBST(root.right);
         return left && cur && right;
     }
+    //二叉搜索树中第k小的元素
+    int ret;
+    int count;
+    public int kthSmallest(TreeNode root, int k) {
+        count = k;
+        dfs(root);
+        return ret;
+    }
+    public void dfs(TreeNode root) {
+        if(root == null || count == 0) {
+            return;
+        }
+        dfs(root.left);
+        count--;
+        if(count == 0) {
+            ret = root.val;
+            return;
+        }
+        dfs(root.right);
+    }
+
 
 
 
