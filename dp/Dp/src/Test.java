@@ -893,6 +893,45 @@ public class Test {
         }
         return dp[sum / 2];
     }
+    //目标和
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        int n = nums.length;
+        for(int x : nums) {
+            sum += x;
+        }
+        int a = (sum + target) / 2;
+        if(a < 0 || (sum + target) % 2 == 1) {
+            return 0;
+        }
+        int[] dp = new int[a + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            for (int j = a; j >= nums[i - 1]; j--) {
+                dp[j] += dp[j - nums[i - 1]];
+            }
+        }
+        return dp[a];
+    }
+    //最后一块石头的重量
+    public int lastStoneWeightII(int[] stones) {
+        int n = stones.length,sum = 0;
+        for(int x : stones) {
+            sum += x;
+        }
+        int[][] dp = new int[n + 1][sum / 2 + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= sum / 2; j++) {
+                dp[i][j] = dp[i - 1][j];
+                if(j >= stones[i - 1]) {
+                    dp[i][j] = Math.max(dp[i][j],dp[i - 1][j - stones[i - 1]] + stones[i - 1]);
+                }
+            }
+        }
+        return sum - 2 * dp[n][sum / 2];
+
+    }
+
 
 
 
