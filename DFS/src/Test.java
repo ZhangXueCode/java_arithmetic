@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 class ListNode {
     int val;
     ListNode next;
@@ -159,6 +163,56 @@ public class Test {
         }
         dfs(root.right);
     }
+    //二叉树的所有路径
+    List<String> ret1;
+    public List<String> binaryTreePaths(TreeNode root) {
+        ret1 = new ArrayList<>();
+        dfs(root,new StringBuffer());
+        return ret1;
+    }
+    void dfs(TreeNode root,StringBuffer _path) {
+        StringBuffer path = new StringBuffer(_path);
+        if(root == null) {
+            return;
+        }
+        path.append(root.val);
+        if(root.left == null && root.right == null) {
+            ret1.add(path.toString());
+            return;
+        }
+        path.append("->");
+        dfs(root.left,path);
+        dfs(root.right,path);
+    }
+    //全排列
+    List<List<Integer>> ret2;
+    List<Integer> path;
+    boolean[] check;
+    public List<List<Integer>> permute(int[] nums) {
+        ret2 = new ArrayList<>();
+        path = new ArrayList<>();
+        check = new boolean[nums.length];
+        dfs(nums);
+        return ret2;
+    }
+    void dfs(int[] nums) {
+        int n = nums.length;
+        if(path.size() == n) {
+            ret2.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if(!check[i]) {
+                path.add(nums[i]);
+                check[i] = true;
+                dfs(nums);
+                check[i] = false;
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+
+
 
 
 
