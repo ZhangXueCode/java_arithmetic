@@ -211,15 +211,33 @@ public class Test {
             }
         }
     }
-
-
-
-
-
-
-
-
-
+    //子集
+    List<List<Integer>> ret3;
+    List<Integer> path1;
+    public List<List<Integer>> subsets(int[] nums) {
+        ret3 = new ArrayList<>();
+        path1 = new ArrayList<>();
+        dfs1(nums,0);
+        return ret3;
+    }
+    public void dfs1(int[] nums,int pose) {
+        ret3.add(new ArrayList<>(path1));
+        for (int i = pose; i < nums.length; i++) {
+            path1.add(nums[i]);
+            dfs1(nums,i + 1);
+            path1.remove(path1.size() - 1);
+        }
+    }
+    public void dfs(int[] nums, int i) {
+        if(i == nums.length) {
+            ret3.add(new ArrayList<>(path1));
+            return;
+        }
+        path1.add(nums[i]);
+        dfs(nums,i + 1);
+        path1.remove(path1.size() - 1);
+        dfs(nums,i + 1);
+    }
 
 
 
