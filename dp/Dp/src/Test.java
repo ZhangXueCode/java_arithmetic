@@ -969,6 +969,22 @@ public class Test {
             }
         }
         System.out.println(dp[V] == -1 ? 0 : dp[V]);
+    }
+    //零钱兑换
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int[] dp = new int[amount + 1];
+        for (int i = 1; i <= amount; i++) {
+            dp[i] = 0x3f3f3f;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= amount; j++) {
+                if(j >= coins[i - 1]) {
+                    dp[j] = Math.min(dp[j],dp[j - coins[i - 1]] + 1);
+                }
+            }
+        }
+        return dp[amount] >= 0x3f3f3f ? -1 : dp[amount];
 
     }
 
