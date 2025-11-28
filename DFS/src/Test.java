@@ -238,6 +238,22 @@ public class Test {
         path1.remove(path1.size() - 1);
         dfs(nums,i + 1);
     }
+    //找出所有子集的异或总和再求和
+    int path3;
+    int tmp;
+    public int subsetXORSum(int[] nums) {
+        dfs2(nums,0);
+        return tmp;
+    }
+    public void dfs2(int[] nums,int pose) {
+        tmp += path3;
+        for (int i = pose; i < nums.length; i++) {
+            path3 ^= nums[i];
+            dfs2(nums,i + 1);
+            path3 ^= nums[i];
+        }
+    }
+
 
 
 
