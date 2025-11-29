@@ -987,6 +987,20 @@ public class Test {
         return dp[amount] >= 0x3f3f3f ? -1 : dp[amount];
 
     }
+    //零钱兑换Ⅱ
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+        for(int x : coins) {
+            for (int j = x; j <= amount; j++) {
+                dp[j] += dp[j - x];
+            }
+        }
+        return dp[amount];
+
+    }
+
 
 
 
