@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Test {
     //最长公共前缀
     public String longestCommonPrefix(String[] strs) {
@@ -37,5 +39,24 @@ public class Test {
         }
         return s.substring(begin,len + begin);
     }
+    //二进制求和
+    public String addBinary(String a, String b) {
+        int t = 0;
+        StringBuilder s = new StringBuilder();
+        int i = a.length() - 1,j = b.length() - 1;
+        while (i >= 0 || j >= 0 || t > 0) {
+            if(i >= 0) {
+                t += a.charAt(i--) - '0';
+            }
+            if(j >= 0) {
+                t += b.charAt(j--) - '0';
+            }
+            int k = t % 2;
+            t = t / 2;
+            s.append(k);
+        }
+        return s.reverse().toString();
+    }
+
 
 }
