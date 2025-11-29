@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class ListNode {
     int val;
@@ -253,6 +250,35 @@ public class Test {
             path3 ^= nums[i];
         }
     }
+    //全排列Ⅱ
+    List<List<Integer>> ret4;
+    List<Integer> path2;
+    boolean[] check2;
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        ret4 = new ArrayList<>();
+        path2 = new ArrayList<>();
+        check2 = new boolean[nums.length];
+        Arrays.sort(nums);
+        dfs3(nums);
+        return ret4;
+    }
+    void dfs3(int[] nums) {
+        if(path2.size() == nums.length) {
+            ret4.add(new ArrayList<>(path2));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if(!check2[i] && (i == 0 || nums[i] != nums[i - 1] || check2[i - 1])) {
+                path2.add(nums[i]);
+                check2[i] = true;
+                dfs3(nums);
+                check2[i] =false;
+                path2.remove(path2.size() - 1);
+            }
+        }
+
+    }
+
 
 
 
