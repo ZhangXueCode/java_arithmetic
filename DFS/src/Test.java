@@ -276,8 +276,33 @@ public class Test {
                 path2.remove(path2.size() - 1);
             }
         }
-
     }
+    //电话号码的字母组合
+    List<String> ret5;
+    StringBuilder path4;
+    String[] hash = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations(String digits) {
+        ret5 = new ArrayList<>();
+        path4 = new StringBuilder();
+        dfs(digits,0);
+        return ret5;
+    }
+    void dfs(String digits,int pose) {
+        if(pose == digits.length()) {
+            ret5.add(path4.toString());
+            return;
+        }
+        int a = digits.charAt(pose) - '0';
+        String s = hash[a];
+        for (int i = 0; i < s.length(); i++) {
+            path4.append(s.charAt(i));
+            dfs(digits,pose + 1);
+            path4.deleteCharAt(path4.length() - 1);
+        }
+    }
+
+
+
 
 
 
