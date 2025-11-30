@@ -57,6 +57,37 @@ public class Test {
         }
         return s.reverse().toString();
     }
+    //字符串相乘
+    public String multiply(String num1, String num2) {
+        if(num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        int m = num1.length();
+        int n = num2.length();
+        int[] num = new int[m + n - 1];
+        char[] s1 = new StringBuilder(num1).reverse().toString().toCharArray();
+        char[] s2 = new StringBuilder(num2).reverse().toString().toCharArray();
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                num[i + j] += (s1[i] - '0') * (s2[j] - '0');
+            }
+        }
+        StringBuilder ret = new StringBuilder();
+        int i = 0;
+        int t = 0;
+        while (i < num.length || t > 0) {
+            if(i < num.length) {
+                t += num[i++];
+            }
+            int k = t % 10;
+            ret.append(k);
+            t /= 10;
+        }
+        return ret.reverse().toString();
+
+    }
+
 
 
 }
