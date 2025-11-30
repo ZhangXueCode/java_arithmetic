@@ -1000,6 +1000,22 @@ public class Test {
         return dp[amount];
 
     }
+    //完全平方数
+    public int numSquares(int n) {
+        int m = (int) Math.sqrt(n);
+        int[] dp = new int[n + 1];
+        int INF = 0x3f3f3f;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = INF;
+        }
+        for (int i = 1; i <= m; i++) {
+            for (int j = i * i; j <= n; j++) {
+                dp[j] = Math.min(dp[j],dp[j - i * i] + 1);
+            }
+        }
+        return dp[n];
+    }
+
 
 
 
