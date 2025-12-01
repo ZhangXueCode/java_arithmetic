@@ -1015,6 +1015,29 @@ public class Test {
         }
         return dp[n];
     }
+    //一和零
+    public int findMaxForm(String[] strs, int m, int n) {
+        int len = strs.length;
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= len; i++) {
+            int a = 0,b = 0;
+            for(char c : strs[i - 1].toCharArray()) {
+                if(c == '0') {
+                    a++;
+                }else {
+                    b++;
+                }
+            }
+            for (int j = m; j >= a; j--) {
+                for (int k = n; k >= b; k--) {
+                    dp[j][k] = Math.max(dp[j][k],dp[j - a][k - b] + 1);
+                }
+            }
+        }
+        return dp[m][n];
+
+    }
+
 
 
 

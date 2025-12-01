@@ -300,6 +300,39 @@ public class Test {
             path4.deleteCharAt(path4.length() - 1);
         }
     }
+    //括号生成
+    List<String> ret6;
+    StringBuilder path5;
+    int left;
+    int right;
+    int n;
+    public List<String> generateParenthesis(int _n) {
+        n = _n;
+        ret6 = new ArrayList<>();
+        path5 = new StringBuilder();
+        dfs();
+        return ret6;
+    }
+    void dfs() {
+        if(right == n) {
+            ret6.add(String.valueOf(path5));
+            return;
+        }
+        if(left < n) {
+            path5.append("(");
+            left++;
+            dfs();
+            path5.deleteCharAt(path5.length() - 1);
+            left--;
+        }
+        if(right < left) {
+            path5.append(")");
+            right++;
+            dfs();
+            path5.deleteCharAt(path5.length() - 1);
+            right--;
+        }
+    }
 
 
 
