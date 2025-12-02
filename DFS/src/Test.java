@@ -333,6 +333,28 @@ public class Test {
             right--;
         }
     }
+    //组合
+    List<List<Integer>> ret7;
+    List<Integer> path6;
+    static int n1;
+    public List<List<Integer>> combine(int _n, int k) {
+        n1 = _n;
+        ret7 = new ArrayList<>();
+        path6 = new ArrayList<>();
+        dfs(1,k);
+        return ret7;
+    }
+    void dfs(int i,int k) {
+        if(path6.size() == k) {
+            ret7.add(new ArrayList<>(path6));
+            return;
+        }
+        for (int j = i; j <= n1; j++) {
+            path6.add(j);
+            dfs(j + 1,k);
+            path6.remove(path6.size() - 1);
+        }
+    }
 
 
 

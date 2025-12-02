@@ -1037,6 +1037,26 @@ public class Test {
         return dp[m][n];
 
     }
+    //盈利计划
+    public int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
+        int mod = (int) (1e9 + 7);
+        int len = group.length;
+        int[][] dp = new int[n + 1][minProfit + 1];
+        for (int j = 0; j <= n; j++) {
+            dp[j][0] = 1;
+        }
+        for (int i = 1; i <= len; i++) {
+            for (int j = n; j >= group[i - 1]; j--) {
+                for (int k = minProfit; k >= 0; k--) {
+                    dp[j][k] += dp[j - group[i - 1]][Math.max(0,(k - profit[i - 1]))];
+                    dp[j][k] %= mod;
+                }
+            }
+        }
+        return dp[n][minProfit];
+
+
+    }
 
 
 
