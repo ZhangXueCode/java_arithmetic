@@ -355,6 +355,23 @@ public class Test {
             path6.remove(path6.size() - 1);
         }
     }
+    //目标和
+    int c;
+    void dfs1(int pose,int path,int[] nums,int t) {
+        if(pose == nums.length) {
+            if(path == t) {
+                c++;
+            }
+            return;
+        }
+        dfs1(pose + 1,path + nums[pose],nums,t);
+
+        dfs1(pose + 1,path - nums[pose],nums,t);
+    }
+    public int findTargetSumWays(int[] nums, int target) {
+        dfs1(0,0,nums,target);
+        return c;
+    }
 
 
 
