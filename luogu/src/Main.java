@@ -3,30 +3,77 @@
 import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String s = in.next();
-        int c = in.nextInt();
-        int[] a = new int[(int)(1e6 + 10)];
-        int[] b = new int[(int)(1e6 + 10)];
-        for (int i = 0; i < s.length(); i++) {
-            a[s.length() - 1 - i] = s.charAt(i) - '0';
-        }
-        long t = 0;
-        int l = s.length();
-        for (int i = s.length() - 1; i >= 0; i--) {
-            t = t * 10 + a[i];
-            b[i] = (int) t / c;
-            t %= c;
-        }
-        while (l > 1 && b[l - 1] == 0) {
-            l--;
-        }
-        for (int j = l - 1; j >= 0; j--) {
-            System.out.print(b[j]);
-        }
-
-    }
+    //铺地毯
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int[][] a = new int[n][4];
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < 4; j++) {
+//                a[i][j] = in.nextInt();
+//            }
+//        }
+//        int x = in.nextInt();
+//        int y = in.nextInt();
+//        boolean flag = false;
+//        for (int i = n - 1; i >= 0; i--) {
+//            if(x >= a[i][0] && x <= a[i][0] + a[i][2] && y >= a[i][1] && y <= a[i][1] + a[i][3]) {
+//                System.out.println(i + 1);
+//                flag = true;
+//                break;
+//            }
+//        }
+//        if(!flag) {
+//            System.out.println("-1");
+//        }
+//
+//    }
+    //好数
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int c = 0;
+//        for (int i = 1; i <= n; i++) {
+//            int num = i;
+//            for (int j = 1; num >= 0; j++) {
+//                if((j % 2) != (num % 10) % 2) {
+//                    break;
+//                }
+//                num /= 10;
+//            }
+//            if(num == 0) {
+//                c++;
+//            }
+//        }
+//        System.out.println(c);
+//
+//
+//    }
+    //高精度除法
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        String s = in.next();
+//        int c = in.nextInt();
+//        int[] a = new int[(int)(1e6 + 10)];
+//        int[] b = new int[(int)(1e6 + 10)];
+//        for (int i = 0; i < s.length(); i++) {
+//            a[s.length() - 1 - i] = s.charAt(i) - '0';
+//        }
+//        long t = 0;
+//        int l = s.length();
+//        for (int i = s.length() - 1; i >= 0; i--) {
+//            t = t * 10 + a[i];
+//            b[i] = (int) t / c;
+//            t %= c;
+//        }
+//        while (l > 1 && b[l - 1] == 0) {
+//            l--;
+//        }
+//        for (int j = l - 1; j >= 0; j--) {
+//            System.out.print(b[j]);
+//        }
+//
+//    }
     //高精度乘法
 //    public static void main(String[] args) {
 //        Scanner in = new Scanner(System.in);
@@ -187,10 +234,4 @@ public class Main {
 //        in.close();
 //
 //    }
-
-
-
-
-
-
 }
