@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class Test {
@@ -48,4 +49,23 @@ public class Test {
         }
         return c;
     }
+    //最大数
+    public String largestNumber(int[] nums) {
+        int n = nums.length;
+        String[] s = new String[n];
+        for (int i = 0; i < n; i++) {
+            s[i] = "" + nums[i];
+        }
+        Arrays.sort(s,(a,b) -> (b + a).compareTo(a + b));
+        StringBuilder ret = new StringBuilder();
+        for(String c : s) {
+            ret.append(c);
+        }
+        if(ret.charAt(0) == '0') {
+            return "0";
+        }
+        return ret.toString();
+
+    }
+
 }
