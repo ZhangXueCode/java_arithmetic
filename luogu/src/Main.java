@@ -1,8 +1,26 @@
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
+
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        double d = in.nextDouble();
+//
+//        // 用BigDecimal保证精度，计算2^n * d
+//        BigInteger base = BigInteger.valueOf(2).pow(n);
+//        BigDecimal num = new BigDecimal(base).multiply(BigDecimal.valueOf(d));
+//
+//        // 四舍五入取整
+//        BigDecimal ret = num.setScale(0, RoundingMode.HALF_UP);
+//        System.out.println(ret);
+//
+//    }
     //铺地毯
 //    public static void main(String[] args) {
 //        Scanner in = new Scanner(System.in);

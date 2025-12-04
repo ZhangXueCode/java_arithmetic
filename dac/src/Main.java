@@ -109,5 +109,35 @@ public class Main {
         }
         return ret;
     }
+    //归并排序
+    int[] tmp;
+    void merge(int left,int right,int[] nums) {
+        if(left >= right) {
+            return;
+        }
+        int mid = (right + left) / 2;
+        merge(left,mid,nums);
+        merge(mid + 1,right,nums);
+        int cur1 = left,cur2 = mid + 1,i = 0;
+        while (cur1 <= mid && cur2 <= right) {
+            tmp[i++] = nums[cur1] <= nums[cur2] ? nums[cur1++] : nums[cur2++];
+        }
+        while (cur1 <= mid) {
+            tmp[i++] = nums[cur1++];
+        }
+        while (cur2 <= right) {
+            tmp[i++] = nums[cur2++];
+        }
+        for (int j = left; j <= right; j++) {
+            nums[j] = tmp[j - left];
+        }
+
+    }
+    public int[] sortArray1(int[] nums) {
+        int n = nums.length;
+        tmp = new int[n];
+        merge(0,nums.length - 1,nums);
+        return nums;
+    }
 
 }
