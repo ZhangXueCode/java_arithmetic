@@ -372,6 +372,48 @@ public class Test {
         dfs1(0,0,nums,target);
         return c;
     }
+    //组合总和
+    List<List<Integer>> ret8;
+    List<Integer> path7;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        ret8 = new ArrayList<>();
+        path7 = new ArrayList<>();
+        dfs(target,0,candidates,0);
+        return ret8;
+    }
+    void dfs(int target,int pose,int[] candidates,int sum) {
+        if(sum == target) {
+            ret8.add(new ArrayList<>(path7));
+            return;
+        }
+        if(sum > target || pose == candidates.length) {
+            return;
+        }
+        for (int i = pose; i < candidates.length; i++) {
+            path7.add(candidates[i]);
+            dfs(target,i,candidates,sum + candidates[i]);
+            path7.remove(path7.size() - 1);
+        }
+    }
+    void dfs2(int target,int pose,int[] candidates,int sum) {
+        if(sum == target) {
+            ret8.add(new ArrayList<>(path7));
+            return;
+        }
+        if(sum > target || pose == candidates.length) {
+            return;
+        }
+        for (int i = 0; i * candidates[pose] + sum <= target; i++) {
+            if(i != 0) {
+                path7.add(candidates[pose]);
+            }
+            dfs2(target,pose + 1,candidates,sum + i * candidates[pose]);
+        }
+
+        for (int i = 1; i * candidates[pose] + sum <= target; i++) {
+            path7.remove(path7.size() - 1);
+        }
+    }
 
 
 
