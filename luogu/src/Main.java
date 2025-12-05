@@ -6,6 +6,44 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
+    //最少修改次数
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        String s = " " + in.next();
+//        String t = " " + in.next();
+//        int m = s.length();
+//        int n = t.length();
+//        int[][] dp = new int[m][n];
+//        for (int i = 1; i < n; i++) {
+//            dp[0][i] = 0x3f3f3f;
+//        }
+//        for (int i = 1; i < m; i++) {
+//            for (int j = 1; j < n; j++) {
+//                dp[i][j] = dp[i - 1][j];
+//                if(s.charAt(i) != t.charAt(j)) {
+//                    dp[i][j] = Math.min(dp[i - 1][j - 1] + 1,dp[i][j]);
+//                }else {
+//                    dp[i][j] = Math.min(dp[i][j],dp[i - 1][j - 1]);
+//                }
+//            }
+//        }
+//        System.out.println(dp[m - 1][n - 1]);
+//    }
+    //特殊年份
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int[] a = new int[5];
+//        int ret = 0;
+//        for (int i = 0; i < 5; i++) {
+//            a[i] = in.nextInt();
+//            String s = String.valueOf(a[i]);
+//            if(s.charAt(0) == s.charAt(2) && (int) s.charAt(1) + 1 == (int)s.charAt(3)) {
+//                ret++;
+//            }
+//        }
+//        System.out.println(ret);
+//
+//    }
 
 //    public static void main(String[] args) {
 //        Scanner in = new Scanner(System.in);
