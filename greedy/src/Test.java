@@ -67,5 +67,23 @@ public class Test {
         return ret.toString();
 
     }
+    //摆动序列
+    public int wiggleMaxLength(int[] nums) {
+        int left = 0;
+        int ret = 0;
+        if(nums.length < 2) {
+            return nums.length;
+        }
+        for (int i = 0; i < nums.length - 1; i++) {
+            int right = nums[i + 1] - nums[i];
+            if(right == 0) continue;
+            if(left * right <= 0) {
+                ret++;
+                left = right;
+            }
+        }
+        ret++;
+        return ret;
+    }
 
 }
