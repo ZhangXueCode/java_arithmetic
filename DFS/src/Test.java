@@ -414,6 +414,37 @@ public class Test {
             path7.remove(path7.size() - 1);
         }
     }
+    //字母大小写全排列
+    List<String> ret9;
+    StringBuilder path8;
+    public List<String> letterCasePermutation(String s) {
+        ret9 = new ArrayList<>();
+        path8 = new StringBuilder();
+        dfs1(s,0);
+        return ret9;
+    }
+    void dfs1(String s,int pose) {
+        if(path8.length() == s.length()) {
+            ret9.add(path8.toString());
+            return;
+        }
+        char ch = s.charAt(pose);
+        path8.append(ch);
+        dfs1(s,pose + 1);
+        path8.deleteCharAt(path8.length() - 1);
+
+        if(ch < '0' || ch > '9') {
+            if(ch >= 'a' && ch <= 'z') {
+                ch -= 32;
+            }else {
+                ch += 32;
+            }
+            path8.append(ch);
+            dfs1(s,pose + 1);
+            path8.deleteCharAt(path8.length() - 1);
+        }
+
+    }
 
 
 
