@@ -139,5 +139,40 @@ public class Main {
         merge(0,nums.length - 1,nums);
         return nums;
     }
+    //数组中的逆序对
+    int[] t;
+    int mergeSort(int[] record,int left,int right) {
+        if(left >= right) {
+            return 0;
+        }
+        int ret = 0;
+        int mid = (left + right) / 2;
+        ret += mergeSort(record,left,mid);
+        ret += mergeSort(record,mid + 1,right);
+        int cur1 = left,cur2 = mid + 1,i = 0;
+        while (cur1 <= mid && cur2 <= right) {
+            if(record[cur1] <= record[cur2]) {
+                t[i++] = record[cur1++];
+            }else {
+                ret += mid - cur1 + 1;
+                t[i++] = record[cur2++];
+            }
+        }
+        while (cur1 <= mid) {
+            t[i++] = record[cur1++];
+        }
+        while (cur2 <= right) {
+            t[i++] = record[cur2++];
+        }
+        for (int j = left; j <= right; j++) {
+            record[j] = t[j - left];
+        }
+        return ret;
+    }
+    public int reversePairs(int[] record) {
+        int n = record.length;
+        t = new int[n];
+        return mergeSort(record,0,n - 1);
+    }
 
 }
