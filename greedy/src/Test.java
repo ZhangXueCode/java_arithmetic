@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
@@ -84,6 +85,30 @@ public class Test {
         }
         ret++;
         return ret;
+    }
+    //最长递增子序列
+    public int lengthOfLIS(int[] nums) {
+        ArrayList<Integer> ret = new ArrayList<>();
+        int n = nums.length;
+        ret.add(nums[0]);
+        for (int i = 1; i < n; i++) {
+            if(nums[i] > ret.get(ret.size() - 1)) {
+                ret.add(nums[i]);
+            }else {
+                int left = 0,right = ret.size() - 1;
+                while (left < right) {
+                    int mid = (right + left) / 2;
+                    if(ret.get(mid) < nums[i]) {
+                        left = mid + 1;
+                    }else {
+                        right = mid;
+                    }
+                }
+                ret.set(left,nums[i]);
+            }
+        }
+        return ret.size();
+
     }
 
 }
