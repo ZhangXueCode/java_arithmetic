@@ -445,6 +445,27 @@ public class Test {
         }
 
     }
+    //优美的排列
+    boolean[] check3;
+    int ret10;
+    public int countArrangement(int n) {
+        check3 = new boolean[n + 1];
+        dfs1(1,n);
+        return ret10;
+    }
+    void dfs1(int pose,int n) {
+        if(pose == n + 1) {
+            ret10++;
+            return;
+        }
+        for (int i = 1; i <= n; i++) {
+            if(!check3[i] && (i % pose == 0 || pose % i == 0)) {
+                check3[i] = true;
+                dfs1(pose + 1,n);
+                check3[i] = false;
+            }
+        }
+    }
 
 
 
