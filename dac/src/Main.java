@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Main {
@@ -173,6 +175,61 @@ public class Main {
         int n = record.length;
         t = new int[n];
         return mergeSort(record,0,n - 1);
+    }
+    //计算右侧小于当前元素的个数
+    int[] t1;
+    int[] t2;
+    int[] index;
+    int[] ret;
+
+    public List<Integer> countSmaller(int[] nums) {
+        int n = nums.length;
+        t1 = new int[n];
+        t2 = new int[n];
+        ret = new int[n];
+        index = new int[n];
+        for (int i = 0; i < n; i++) {
+            index[i] = i;
+        }
+        ms(nums,0,n - 1);
+        List<Integer> l = new ArrayList<>();
+        for(int x : ret) {
+            l.add(x);
+        }
+        return l;
+
+    }
+    void ms(int[] nums,int left,int right) {
+        if(left >= right) {
+            return;
+        }
+        int mid = (left + right) / 2;
+        ms(nums,left,mid);
+        ms(nums,mid + 1,right);
+        int cur1 = left,cur2 = mid + 1,i = 0;
+        while (cur1 <= mid && cur2 <= right) {
+            if(nums[cur1] <= nums[cur2]) {
+                t2[i] = index[cur2];
+                t1[i++] = nums[cur2++];
+            }else {
+                ret[index[cur1]] += right - cur2 + 1;
+                t2[i] = index[cur1];
+                t1[i++] = nums[cur1++];
+            }
+        }
+        while (cur1 <= mid) {
+            t2[i] = index[cur1];
+            t1[i++] = nums[cur1++];
+        }
+        while (cur2 <= right) {
+            t2[i] = index[cur2];
+            t1[i++] = nums[cur2++];
+        }
+        for (int j = left; j <= right; j++) {
+            nums[j] = t1[j - left];
+            index[j] = t2[j - left];
+        }
+
     }
 
 }
