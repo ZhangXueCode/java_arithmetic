@@ -90,7 +90,7 @@ public class Test {
         }
     }
     //合并k个有序链表
-    public ListNode mergeKLists(ListNode[] lists) {
+    public ListNode mergeKLists1(ListNode[] lists) {
         PriorityQueue<ListNode> heap = new PriorityQueue<>((v1,v2) -> v1.val - v2.val);
         for(ListNode head : lists) {
             if(head != null) {
@@ -108,6 +108,51 @@ public class Test {
             }
         }
         return ret.next;
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        int n = lists.length;
+        return merge(lists,0,n - 1);
+
+    }
+    ListNode merge(ListNode[] lists,int left,int right) {
+         if(left > right) {
+             return null;
+         }
+         if(left == right) {
+             return lists[left];
+         }
+         int mid = (left + right) / 2;
+
+         ListNode l1 = merge(lists,left,mid);
+         ListNode l2 = merge(lists,mid + 1,right);
+
+         return mergeTwoList(l1,l2);
+
+    }
+    ListNode mergeTwoList(ListNode l1,ListNode l2) {
+        ListNode head = new ListNode();
+        ListNode pre = head;
+        while (l1 != null && l2 != null) {
+            if(l1.val <= l2.val) {
+                pre.next = l1;
+                pre = l1;
+                l1 = l1.next;
+            }else {
+                pre.next = l2;
+                pre = l2;
+                l2 = l2.next;
+            }
+        }
+
+        if(l1 != null) {
+            pre.next = l1;
+        }
+        if(l2 != null) {
+            pre.next = l2;
+        }
+
+        return head.next;
     }
     //k个一组反转链表
     public ListNode reverseKGroup(ListNode head, int k) {
