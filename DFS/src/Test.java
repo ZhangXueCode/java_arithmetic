@@ -466,6 +466,43 @@ public class Test {
             }
         }
     }
+    //N皇后
+    List<List<String>> ret11;
+    char[][] path10;
+    boolean[] col;
+    boolean[] digit1;
+    boolean[] digit2;
+    public List<List<String>> solveNQueens(int n) {
+        ret11 = new ArrayList<>();
+        path10 = new char[n][n];
+        col = new boolean[n];
+        digit1 = new boolean[2 * n];
+        digit2 = new boolean[2 * n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(path10[i],'.');
+        }
+        dfs2(0,n);
+        return ret11;
+    }
+    void dfs2(int pose,int n) {
+        if(pose == n) {
+            List<String> tmp = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                tmp.add(new String(path10[i]));
+            }
+            ret11.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if(!col[i] && !digit1[pose - i + n] && !digit2[pose + i]) {
+                path10[pose][i] = 'Q';
+                col[i] = digit1[i] = digit2[i] = true;
+                dfs2(pose + 1,n);
+                path10[pose][i] = '.';
+                col[i] = digit1[i] = digit2[i] = false;
+            }
+        }
+    }
 
 
 
