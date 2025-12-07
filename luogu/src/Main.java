@@ -1,11 +1,55 @@
-
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.*;
 public class Main {
+    //最少修改次数变成斐波那契数组
+//    public static void main(String[] args){
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int[] arr = new int[n];
+//        for (int i = 0; i < n; i++) {
+//            arr[i] = in.nextInt();
+//        }
+//
+//        int minModifications = n; // 初始化为最大可能修改次数
+//
+//        long[] F = new long[n];
+//        if (n > 0) F[0] = 1;
+//        if (n > 1) F[1] = 1;
+//        for (int i = 2; i < n; i++) {
+//            F[i] = F[i-1] + F[i-2];
+//        }
+//        // 统计候选a₀
+//        Map<Long, Integer> countMap = new HashMap<>();
+//
+//        for (int i = 0; i < n; i++) {
+//            // 如果arr[i]能被F[i]整除
+//            if (arr[i] % F[i] == 0) {
+//                long candidate = arr[i] / F[i];
+//                if (candidate > 0) {
+//                    countMap.put(candidate, countMap.getOrDefault(candidate, 0) + 1);
+//                }
+//            }
+//        }
+//
+//        // 找到出现次数最多的候选a₀
+//        int maxCount = 0;
+//        for (int count : countMap.values()) {
+//            maxCount = Math.max(maxCount, count);
+//        }
+//
+//        if (maxCount != 0) {
+//            minModifications = n - maxCount;
+//        }
+//
+//        System.out.println(minModifications);
+//    }
+//
+
+
     //最少修改次数
 //    public static void main(String[] args) {
 //        Scanner in = new Scanner(System.in);
