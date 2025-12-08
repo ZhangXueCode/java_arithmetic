@@ -127,5 +127,24 @@ public class Test {
         }
         return false;
     }
+    //最长连续递增子序列
+    public int findLengthOfLCIS(int[] nums) {
+        int n = nums.length;
+        int i = 0,j = 1,ret = 1;
+        if(n == 1) {
+            return ret;
+        }
+        while (i < n && j < n) {
+            if(nums[j - 1] < nums[j]) {
+                j++;
+                ret = Math.max(ret,j - i);
+            }else {
+                i = j;
+                j++;
+            }
+        }
+        return ret;
+
+    }
 
 }

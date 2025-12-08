@@ -3,8 +3,35 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.*;
+
 public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] a = new int[n];
+        int[] b = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = in.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            b[i] = in.nextInt();
+        }
+
+        Arrays.sort(a);
+        Arrays.sort(b);
+
+        int i = 0,j = 0,c = 0;
+        while (i < n && j < n) {
+            if(a[i] > b[j]) {
+                c++;
+                i++;
+                j++;
+            }else {
+                i++;
+            }
+        }
+        System.out.println(n - c);
+    }
     //最少修改次数变成斐波那契数组
 //    public static void main(String[] args){
 //        Scanner in = new Scanner(System.in);

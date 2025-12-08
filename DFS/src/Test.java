@@ -503,6 +503,24 @@ public class Test {
             }
         }
     }
+    //有效的数独
+    public boolean isValidSudoku(char[][] board) {
+        boolean[][] row = new boolean[9][10];
+        boolean[][] col = new boolean[9][10];
+        boolean[][][] grid = new boolean[3][3][10];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(board[i][j] != '.') {
+                    int a = board[i][j] - '0';
+                    if(row[i][a] || col[j][a] || grid[i / 3][j / 3][a]) {
+                        return false;
+                    }
+                    row[i][a] = col[j][a] = grid[i / 3][j / 3][a] = true;
+                }
+            }
+        }
+        return true;
+    }
 
 
 
