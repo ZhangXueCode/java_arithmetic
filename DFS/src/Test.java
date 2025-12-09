@@ -521,6 +521,45 @@ public class Test {
         }
         return true;
     }
+    //解数独
+    boolean[][] row;
+    boolean[][] col1;
+    boolean[][][] grid;
+    public void solveSudoku(char[][] board) {
+        row = new boolean[9][10];
+        col1 = new boolean[9][10];
+        grid = new boolean[3][3][10];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(board[i][j] != '.') {
+                    int n = board[i][j] - '0';
+                    row[i][n] = col1[j][n] = grid[i / 3][j / 3][n] = true;
+                }
+            }
+        }
+        dfs(board);
+    }
+    boolean dfs(char[][] board) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(board[i][j] == '.') {
+                    for (int k = 1; k < 10; k++) {
+                        if(!row[i][k] && !col1[j][k] && !grid[i / 3][j / 3][k]) {
+                            board[i][j] = (char) (k + '0');
+                            row[i][k] = col1[j][k] = grid[i / 3][j / 3][k] = true;
+                            if(dfs(board)) {
+                                return true;
+                            }
+                            board[i][j] = '.';
+                            row[i][k] = col1[j][k] = grid[i / 3][j / 3][k] = false;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 
 
