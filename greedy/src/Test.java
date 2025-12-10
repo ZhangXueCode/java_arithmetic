@@ -147,13 +147,35 @@ public class Test {
 
     }
     //买卖股票的最佳时期
-    public int maxProfit(int[] prices) {
+    public int maxProfit1(int[] prices) {
         int ret = 0;
         for (int i = 0,prev = Integer.MAX_VALUE; i < prices.length; i++) {
             ret = Math.max(ret,prices[i] - prev);
             prev = Math.min(prev,prices[i]);
         }
         return ret;
+    }
+    //买卖股票的最佳时机Ⅱ
+    public int maxProfit(int[] prices) {
+        //拆分天数
+        int ret = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            if(prices[i + 1] > prices[i]) {
+                ret += prices[i + 1] - prices[i];
+            }
+        }
+        return ret;
+        //双指针
+//        int ret = 0;
+//        for (int i = 0; i < prices.length; i++) {
+//            int j = i;
+//            while (j + 1 < prices.length && prices[j + 1] > prices[j]) {
+//                j++;
+//            }
+//            ret += prices[j] - prices[i];
+//            i = j;
+//        }
+//        return ret;
     }
 
 }
