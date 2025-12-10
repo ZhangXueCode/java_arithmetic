@@ -560,6 +560,44 @@ public class Test {
         }
         return true;
     }
+    //单词搜索
+    boolean[][] visit;
+    char[] s;
+    int m;
+    int _n;
+    public boolean exist(char[][] board, String word) {
+        m = board.length;
+        _n = board[0].length;
+        visit = new boolean[m][_n];
+        s = word.toCharArray();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < _n; j++) {
+                if(board[i][j] == s[0]) {
+                    visit[i][j] = true;
+                    if(dfs(board,i,j,1)) return true;
+                    visit[i][j] = false;
+                }
+            }
+        }
+        return false;
+    }
+    int[] dx = {0,0,1,-1};
+    int[] dy = {1,-1,0,0};
+    boolean dfs(char[][] board,int i,int j,int pose) {
+        if(pose == s.length) {
+            return true;
+        }
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m && y >= 0 && y < _n && !visit[x][y] && board[x][y] == s[pose]) {
+                visit[x][y] = true;
+                if(dfs(board,x,y,pose + 1)) return true;
+                visit[x][y] = false;
+            }
+        }
+        return false;
+    }
 
 
 
