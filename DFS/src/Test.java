@@ -598,6 +598,39 @@ public class Test {
         }
         return false;
     }
+    //黄金矿工
+    int m2;
+    int n2;
+    boolean[][] vis;
+    int ret12;
+    public int getMaximumGold(int[][] grid) {
+        m2 = grid.length;
+        n2 = grid[0].length;
+        vis = new boolean[m2][n2];
+        for (int i = 0; i < m2; i++) {
+            for (int j = 0; j < n2; j++) {
+                if(grid[i][j] != 0) {
+                    vis[i][j] = true;
+                    dfs(grid,i,j,grid[i][j]);
+                    vis[i][j] = false;
+                }
+            }
+        }
+        return ret12;
+
+    }
+    void dfs(int[][] grid,int i,int j,int path) {
+        ret12 = Math.max(ret12,path);
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m2 && y >= 0 && y < n2 && !vis[x][y] && grid[x][y] != 0) {
+                vis[x][y] = true;
+                dfs(grid,x,y,path + grid[x][y]);
+                vis[x][y] = false;
+            }
+        }
+    }
 
 
 
