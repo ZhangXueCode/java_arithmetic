@@ -177,5 +177,35 @@ public class Test {
 //        }
 //        return ret;
     }
+    //k次取反后最大化的数组和
+    public int largestSumAfterKNegations(int[] nums, int k) {
+        int m = 0,n = nums.length;
+        int min = Integer.MAX_VALUE;
+        for(int x : nums) {
+            if(x < 0) {
+                m++;
+            }
+            min = Math.min(min,Math.abs(x));
+        }
+        int ret = 0;
+        if(m > k) {
+            Arrays.sort(nums);
+            for (int i = 0; i < k; i++) {
+                ret += -nums[i];
+            }
+            for (int i = k; i < n; i++) {
+                ret += nums[i];
+            }
+        }else {
+            int a = k - m;
+            for(int x : nums) {
+                ret += Math.abs(x);
+            }
+            if(a % 2 != 0) {
+                ret -= 2 * min;
+            }
+        }
+        return ret;
+    }
 
 }
