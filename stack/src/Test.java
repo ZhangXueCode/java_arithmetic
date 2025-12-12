@@ -86,6 +86,53 @@ public class Test {
         }
         return ret;
     }
+    //字符串解码
+    public  String decodeString(String ss) {
+        Stack<Integer> st1 = new Stack<>();
+        Stack<StringBuilder> st2 = new Stack<>();
+        st2.push(new StringBuilder());
+        char[] s = ss.toCharArray();
+        int n = s.length;
+        int i = 0;
+        while (i < n) {
+            if(s[i] >= '1' && s[i] <= '9') {
+                int tmp = 0;
+                while (i < n && s[i] >= '1' && s[i] <= '9') {
+                    tmp *= 10;
+                    tmp += s[i] - '0';
+                    i++;
+                }
+                st1.push(tmp);
+            } else if (s[i] == '[') {
+                i++;
+                StringBuilder stringBuilder = new StringBuilder();
+                while (i < n && s[i] >= 'a' && s[i] <= 'z') {
+                    stringBuilder.append(s[i]);
+                    i++;
+                }
+                st2.push(stringBuilder);
+            } else if (s[i] == ']') {
+                int a = st1.pop();
+                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder b = st2.pop();
+                while (a-- > 0) {
+                    stringBuilder.append(b);
+                }
+                st2.push(stringBuilder);
+                i++;
+            } else {
+                StringBuilder stringBuilder = new StringBuilder();
+                while (i < n && s[i] >= 'a' && s[i] <= 'z') {
+                    stringBuilder.append(s[i]);
+                    i++;
+                }
+                st2.peek().append(stringBuilder);
+            }
+        }
+        return st2.pop().toString();
+
+    }
+
 
 
 
