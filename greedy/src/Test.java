@@ -207,5 +207,22 @@ public class Test {
         }
         return ret;
     }
+    //按身高排序
+    public String[] sortPeople(String[] names, int[] heights) {
+        int n = names.length;
+        Integer[] index = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            index[i] = i;
+        }
+        Arrays.sort(index,(i,j) -> {
+            return heights[j] - heights[i];
+        });
+        String[] ret = new String[n];
+        for (int i = 0; i < n; i++) {
+            ret[i] = names[index[i]];
+        }
+        return ret;
+
+    }
 
 }
