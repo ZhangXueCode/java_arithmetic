@@ -631,6 +631,55 @@ public class Test {
             }
         }
     }
+    //不同路径Ⅲ
+    int ret13;
+    int step;
+    int m3;
+    int n3;
+    boolean[][] vi;
+    public int uniquePathsIII(int[][] grid) {
+        m3 = grid.length;
+        n3 = grid[0].length;
+        vi = new boolean[m3][n3];
+        step = 2;
+        for (int i = 0; i < m3; i++) {
+            for (int j = 0; j < n3; j++) {
+                if(grid[i][j] == 0) {
+                    step++;
+                }
+            }
+        }
+        for (int i = 0; i < m3; i++) {
+            for (int j = 0; j < n3; j++) {
+                if(grid[i][j] == 1) {
+                    vi[i][j] = true;
+                    dfs1(grid,i,j,1);
+                    vi[i][j] = false;
+                }
+            }
+        }
+
+        return ret13;
+    }
+    void dfs1(int[][] grid,int i,int j,int count) {
+        if(grid[i][j] == 2) {
+            if(count == step) {
+                ret13++;
+            }
+            return;
+        }
+
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m3 && y >= 0 && y < n3 && !vi[x][y] && grid[x][y] != -1) {
+                vi[x][y] = true;
+                dfs1(grid,x,y,count + 1);
+                vi[x][y] = false;
+            }
+        }
+    }
+
 
 
 
