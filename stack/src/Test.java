@@ -133,6 +133,22 @@ public class Test {
 
     }
 
+    //验证栈序列
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        Stack<Integer> st = new Stack<>();
+        int i = 0,j = 0;
+        while (i < pushed.length) {
+            st.push(pushed[i]);
+            while (!st.isEmpty() && st.peek() == popped[j]) {
+                st.pop();
+                j++;
+            }
+            i++;
+        }
+        return st.isEmpty();
+
+    }
+
 
 
 
