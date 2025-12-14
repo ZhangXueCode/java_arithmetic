@@ -5,33 +5,60 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+    //kmp
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        int[] a = new int[n];
-        int[] b = new int[n];
-        for (int i = 0; i < n; i++) {
-            a[i] = in.nextInt();
-        }
-        for (int i = 0; i < n; i++) {
-            b[i] = in.nextInt();
-        }
-
-        Arrays.sort(a);
-        Arrays.sort(b);
-
-        int i = 0,j = 0,c = 0;
-        while (i < n && j < n) {
-            if(a[i] > b[j]) {
-                c++;
-                i++;
+        String s = in.next();
+        String t = in.next();
+        int m = s.length();
+        int n = t.length();
+        String ss = ' ' + t + '#' + s;
+        char[] c = ss.toCharArray();
+        int[] pi = new int[(int) (2e6 + 10)];
+        for (int i = 2,j = 0; i <= m + n + 1; i++) {
+            while (j != 0 && c[i] != c[j + 1]) {
+                j = pi[j];
+            }
+            if(c[i] == c[j + 1]) {
                 j++;
-            }else {
-                i++;
+            }
+            pi[i] = j;
+
+            if(pi[i] == n) {
+                System.out.println(i - 2 * m);
             }
         }
-        System.out.println(n - c);
+        for (int i = 1; i <= n; i++) {
+            System.out.print(pi[i] + " ");
+        }
     }
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int[] a = new int[n];
+//        int[] b = new int[n];
+//        for (int i = 0; i < n; i++) {
+//            a[i] = in.nextInt();
+//        }
+//        for (int i = 0; i < n; i++) {
+//            b[i] = in.nextInt();
+//        }
+//
+//        Arrays.sort(a);
+//        Arrays.sort(b);
+//
+//        int i = 0,j = 0,c = 0;
+//        while (i < n && j < n) {
+//            if(a[i] > b[j]) {
+//                c++;
+//                i++;
+//                j++;
+//            }else {
+//                i++;
+//            }
+//        }
+//        System.out.println(n - c);
+//    }
     //最少修改次数变成斐波那契数组
 //    public static void main(String[] args){
 //        Scanner in = new Scanner(System.in);
