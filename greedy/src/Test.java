@@ -222,7 +222,33 @@ public class Test {
             ret[i] = names[index[i]];
         }
         return ret;
+    }
+    //优势洗牌
+    public int[] advantageCount(int[] nums1, int[] nums2) {
+        int n = nums1.length,m = nums2.length;
+        int[] ret = new int[n];
+        Integer[] index = new Integer[m];
+        for (int i = 0; i < m; i++) {
+            index[i] = i;
+        }
+        Arrays.sort(nums1);
+        Arrays.sort(index,(i,j) -> {
+            return nums2[i] - nums2[j];
+        });
+
+        int left = 0,right = m - 1;
+        for(int x : nums1) {
+            if(x <= nums2[index[left]]) {
+                ret[index[right]] = x;
+                right--;
+            }else {
+                ret[index[left]] = x;
+                left++;
+            }
+        }
+        return ret;
 
     }
+
 
 }

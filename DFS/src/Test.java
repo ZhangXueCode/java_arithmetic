@@ -679,6 +679,32 @@ public class Test {
             }
         }
     }
+    //图像渲染
+    int color;
+    int m4;
+    int n4;
+    int t;
+    public int[][] floodFill(int[][] image, int sr, int sc, int _color) {
+        if(color == image[sr][sc]) {
+            return image;
+        }
+        m4 = image.length;
+        n4 = image[0].length;
+        color = _color;
+        t = image[sr][sc];
+        dfs(image,sr,sc);
+        return image;
+    }
+    void dfs(int[][] image,int i,int j) {
+        image[i][j] = color;
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x <= m4 && y >= 0 && y <= n4 && image[x][y] == t) {
+                dfs(image,x,y);
+            }
+        }
+    }
 
 
 
