@@ -249,6 +249,24 @@ public class Test {
         return ret;
 
     }
+    //最长回文串
+    public int longestPalindrome(String s) {
+        int ret = 0;
+        int[] hash = new int[127];
+        char[] c = s.toCharArray();
+        for (int i = 0; i < s.length(); i++) {
+            hash[c[i]]++;
+        }
+        for(int x : hash) {
+            ret += x / 2 * 2;
+        }
+        if(ret < s.length()) {
+            ret += 1;
+        }
+        return ret;
+
+
+    }
 
 
 }
