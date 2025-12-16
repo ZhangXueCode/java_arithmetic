@@ -705,6 +705,37 @@ public class Test {
             }
         }
     }
+    //岛屿数量
+    boolean[][] v;
+    int m5;
+    int n5;
+
+    public int numIslands(char[][] grid) {
+        m5 = grid.length;
+        n5 = grid[0].length;
+        v = new boolean[m5][n5];
+        int ret = 0;
+        for (int i = 0; i < m5; i++) {
+            for (int j = 0; j < n5; j++) {
+                if(!v[i][j] && grid[i][j] == '1') {
+                    dfs(grid,i,j);
+                }
+            }
+        }
+        return ret;
+
+    }
+    void dfs(char[][] grid,int i,int j) {
+        v[i][j] = true;
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m5 && y >= 0 && y < n5 && !v[x][y] && grid[x][y] == '1') {
+                dfs(grid,x,y);
+            }
+        }
+
+    }
 
 
 
