@@ -718,6 +718,7 @@ public class Test {
         for (int i = 0; i < m5; i++) {
             for (int j = 0; j < n5; j++) {
                 if(!v[i][j] && grid[i][j] == '1') {
+                    ret++;
                     dfs(grid,i,j);
                 }
             }
@@ -735,6 +736,39 @@ public class Test {
             }
         }
 
+    }
+    //岛屿的最大面积
+    int ret14;
+    boolean[][] v1;
+    int m6;
+    int n6;
+    int c1;
+    public int maxAreaOfIsland(int[][] grid) {
+        m6 = grid.length;
+        n6 = grid[0].length;
+        v1 = new boolean[m6][n6];
+        for (int i = 0; i < m6; i++) {
+            for (int j = 0; j < n6; j++) {
+                if(!v1[i][j] && grid[i][j] == 1) {
+                    dfs1(grid,i,j);
+                    c1 = 0;
+                }
+            }
+        }
+        return ret14;
+
+    }
+    void dfs1(int[][] grid,int i,int j) {
+        c1++;
+        v1[i][j] = true;
+        ret14 = Math.max(ret14,c1);
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m6 && y >= 0 && y < n6 && !v1[x][y] && grid[x][y] == 1) {
+                dfs(grid,x,y);
+            }
+        }
     }
 
 
