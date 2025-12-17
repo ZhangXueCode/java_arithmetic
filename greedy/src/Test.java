@@ -267,6 +267,26 @@ public class Test {
 
 
     }
+    //增减字符串匹配
+    public int[] diStringMatch(String s) {
+        int n = s.length();
+        int[] ret = new int[n + 1];
+        int left = 0,right = n;
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if(c == 'I') {
+                ret[i] = left;
+                left++;
+            }else {
+                ret[i] = right;
+                right--;
+            }
+        }
+        ret[n] = left;
+        return ret;
+    }
+
+
 
 
 }
