@@ -9,8 +9,8 @@ public class Main {
     //线段树
     static int[] a;
     static int p;
-    int lc = p * 2;  //左子节点
-    int rc = p * 2 + 1;  //右子节点
+    int lc;  //左子节点
+    int rc;  //右子节点
 
     static class Tree{
         int l;    //p为节点 l为维护的左端点
@@ -18,17 +18,23 @@ public class Main {
         int sum;
     }
     static Tree[] t;
-    void Build(int p,int l,int r) {
+    void pushUp(int p,int lc,int rc) {
+        //整合两个孩子节点的信息
+        t[p].sum = t[lc].sum + t[rc].sum;
+    }
+    void build(int p,int l,int r) {
         if(l == r) {
             t[p].sum = a[l];
             return;
         }
+        lc = p * 2;
+        rc = p * 2 + 1;
         int mid = (l + r) / 2;
-        Build(lc,l,mid);
-        Build(rc,mid + 1,r);
-        t[p].sum = t[lc].sum + t[rc].sum;
+        build(lc,l,mid);
+        build(rc,mid + 1,r);
+        pushUp(p,lc,rc);
     }
-    int Query(int p,int x,int y) {//x，y为查询区间的端点
+    int query(int p,int x,int y) {//x，y为查询区间的端点
         int l = t[p].l;
         int r = t[p].r;
         if(l <= x && r <= y) {
@@ -36,13 +42,33 @@ public class Main {
         }
         int sum = 0;
         int mid = (l + r) / 2;
+        lc = p * 2;
+        rc = p * 2 + 1;
         if(x <= mid) {
-            sum += Query(lc,l,mid);
+            sum += query(lc,l,mid);
         }
         if(y >= mid + 1) {
-            sum += Query(rc,mid + 1,r);
+            sum += query(rc,mid + 1,r);
         }
         return sum;
+    }
+    void modify(int p,int x,int k) {
+        //x为需要修改的位置 k为增加的数
+        int l = t[p].l;
+        int r = t[p].r;
+        if(l == x && r == x) {
+            t[x].sum += k;
+            return;
+        }
+        lc = p * 2;
+        rc = p * 2 + 1;
+        int mid = (l + r) / 2;
+        if(x <= mid) {
+            modify(lc,x,k);
+        }else {
+            modify(rc,x,k);
+        }
+        pushUp(p,lc,rc);
     }
 
 
