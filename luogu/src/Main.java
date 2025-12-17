@@ -1,37 +1,83 @@
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.sql.Struct;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    //kmp
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String s = in.next();
-        String t = in.next();
-        int m = s.length();
-        int n = t.length();
-        String ss = ' ' + t + '#' + s;
-        char[] c = ss.toCharArray();
-        int[] pi = new int[(int) (2e6 + 10)];
-        for (int i = 2,j = 0; i <= m + n + 1; i++) {
-            while (j != 0 && c[i] != c[j + 1]) {
-                j = pi[j];
-            }
-            if(c[i] == c[j + 1]) {
-                j++;
-            }
-            pi[i] = j;
+    //线段树
+    static int[] a;
+    static int p;
+    int lc = p * 2;  //左子节点
+    int rc = p * 2 + 1;  //右子节点
 
-            if(pi[i] == n) {
-                System.out.println(i - 2 * m);
-            }
-        }
-        for (int i = 1; i <= n; i++) {
-            System.out.print(pi[i] + " ");
-        }
+    static class Tree{
+        int l;    //p为节点 l为维护的左端点
+        int r;    //r为维护的右端点
+        int sum;
     }
+    static Tree[] t;
+    void Build(int p,int l,int r) {
+        if(l == r) {
+            t[p].sum = a[l];
+            return;
+        }
+        int mid = (l + r) / 2;
+        Build(lc,l,mid);
+        Build(rc,mid + 1,r);
+        t[p].sum = t[lc].sum + t[rc].sum;
+    }
+    int Query(int p,int x,int y) {//x，y为查询区间的端点
+        int l = t[p].l;
+        int r = t[p].r;
+        if(l <= x && r <= y) {
+            return t[p].sum;
+        }
+        int sum = 0;
+        int mid = (l + r) / 2;
+        if(x <= mid) {
+            sum += Query(lc,l,mid);
+        }
+        if(y >= mid + 1) {
+            sum += Query(rc,mid + 1,r);
+        }
+        return sum;
+    }
+
+
+    public static void main(String[] args) {
+        t = new Tree[1000000];
+        p = 1;
+        a = new int[]{3, 4, 5, 6};
+    }
+    //kmp
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        String s = in.next();
+//        String t = in.next();
+//        int m = s.length();
+//        int n = t.length();
+//        String ss = ' ' + t + '#' + s;
+//        char[] c = ss.toCharArray();
+//        int[] pi = new int[(int) (2e6 + 10)];
+//        for (int i = 2,j = 0; i <= m + n + 1; i++) {
+//            while (j != 0 && c[i] != c[j + 1]) {
+//                j = pi[j];
+//            }
+//            if(c[i] == c[j + 1]) {
+//                j++;
+//            }
+//            pi[i] = j;
+//
+//            if(pi[i] == n) {
+//                System.out.println(i - 2 * m);
+//            }
+//        }
+//        for (int i = 1; i <= n; i++) {
+//            System.out.print(pi[i] + " ");
+//        }
+//    }
 //    public static void main(String[] args) {
 //        Scanner in = new Scanner(System.in);
 //        int n = in.nextInt();
