@@ -132,6 +132,32 @@ public class Test {
         return ret;
 
     }
+    //在每个树行中找最大值
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> ret = new ArrayList<>();
+        if(root == null) {
+            return ret;
+        }
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            int tmp = Integer.MIN_VALUE;
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
+                TreeNode node = q.poll();
+                tmp = Math.max(tmp,node.val);
+                if(node.left != null) {
+                    q.add(node.left);
+                }
+                if(node.right != null) {
+                    q.add(node.right);
+                }
+            }
+            ret.add(tmp);
+        }
+        return ret;
+
+    }
 
 
 }
