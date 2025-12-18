@@ -1,82 +1,110 @@
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.sql.Struct;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 public class Main {
-    //线段树
-    static int[] a;
-    static int p;
-    int lc;  //左子节点
-    int rc;  //右子节点
+    static class Tree {
+        int l, r;
+        long sum;
+    }
 
-    static class Tree{
-        int l;    //p为节点 l为维护的左端点
-        int r;    //r为维护的右端点
-        int sum;
+    static Tree[] tree;
+    static int[] arr;
+
+    // 向上合并
+    private static void pushUp(int p) {
+        tree[p].sum = tree[2 * p].sum + tree[2 * p + 1].sum;
     }
-    static Tree[] t;
-    void pushUp(int p,int lc,int rc) {
-        //整合两个孩子节点的信息
-        t[p].sum = t[lc].sum + t[rc].sum;
-    }
-    void build(int p,int l,int r) {
-        if(l == r) {
-            t[p].sum = a[l];
+
+    // 构建线段树
+    private static void build(int p, int l, int r) {
+        tree[p].l = l;
+        tree[p].r = r;
+        if (l == r) {
+            tree[p].sum = arr[l];
             return;
         }
-        lc = p * 2;
-        rc = p * 2 + 1;
         int mid = (l + r) / 2;
-        build(lc,l,mid);
-        build(rc,mid + 1,r);
-        pushUp(p,lc,rc);
+        build(2 * p, l, mid);
+        build(2 * p + 1, mid + 1, r);
+        pushUp(p);
     }
-    int query(int p,int x,int y) {//x，y为查询区间的端点
-        int l = t[p].l;
-        int r = t[p].r;
-        if(l <= x && r <= y) {
-            return t[p].sum;
-        }
-        int sum = 0;
-        int mid = (l + r) / 2;
-        lc = p * 2;
-        rc = p * 2 + 1;
-        if(x <= mid) {
-            sum += query(lc,l,mid);
-        }
-        if(y >= mid + 1) {
-            sum += query(rc,mid + 1,r);
-        }
-        return sum;
-    }
-    void modify(int p,int x,int k) {
-        //x为需要修改的位置 k为增加的数
-        int l = t[p].l;
-        int r = t[p].r;
-        if(l == x && r == x) {
-            t[x].sum += k;
+
+    // 单点更新：第x个位置加k
+    private static void update(int p, int x, long k) {
+        if (tree[p].l == tree[p].r) {
+            tree[p].sum += k;
             return;
         }
-        lc = p * 2;
-        rc = p * 2 + 1;
-        int mid = (l + r) / 2;
-        if(x <= mid) {
-            modify(lc,x,k);
-        }else {
-            modify(rc,x,k);
+        int mid = (tree[p].l + tree[p].r) / 2;
+        if (x <= mid) {
+            update(2 * p, x, k);
+        } else {
+            update(2 * p + 1, x, k);
         }
-        pushUp(p,lc,rc);
+        pushUp(p);
     }
 
-
-    public static void main(String[] args) {
-        t = new Tree[1000000];
-        p = 1;
-        a = new int[]{3, 4, 5, 6};
+    // 区间查询：[ql, qr]的和
+    private static long query(int p, int ql, int qr) {
+        if (ql <= tree[p].l && tree[p].r <= qr) {
+            return tree[p].sum;
+        }
+        int mid = (tree[p].l + tree[p].r) / 2;
+        long res = 0;
+        if (ql <= mid) {
+            res += query(2 * p, ql, qr);
+        }
+        if (qr > mid) {
+            res += query(2 * p + 1, ql, qr);
+        }
+        return res;
     }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+        arr = new int[n + 1]; // 下标从1开始
+        st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // 初始化线段树，空间开4倍
+        tree = new Tree[4 * n];
+        for (int i = 0; i < 4 * n; i++) {
+            tree[i] = new Tree();
+        }
+        build(1, 1, n);
+
+        // 处理m次操作
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int op = Integer.parseInt(st.nextToken());
+            if (op == 1) {
+                int x = Integer.parseInt(st.nextToken());
+                long k = Long.parseLong(st.nextToken());
+                update(1, x, k);
+            } else if (op == 2) {
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+                long ans = query(1, x, y);
+                bw.write(ans + "\n");
+            }
+        }
+
+        bw.flush();
+        br.close();
+        bw.close();
+    }
+
     //kmp
 //    public static void main(String[] args) {
 //        Scanner in = new Scanner(System.in);
