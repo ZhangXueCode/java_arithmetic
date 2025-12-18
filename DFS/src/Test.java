@@ -770,6 +770,49 @@ public class Test {
             }
         }
     }
+    //被围绕的区域
+    int m7;
+    int n7;
+    public void solve(char[][] board) {
+        m7 = board.length;
+        n7 = board[0].length;
+        for (int i = 0; i < n7; i++) {
+            if(board[0][i] == 'O') {
+                dfs1(board,0,i);
+            }
+            if(board[m7 - 1][i] == 'O') {
+                dfs1(board,m7 - 1,i);
+            }
+        }
+        for (int i = 1; i < m7 - 1; i++) {
+            if(board[i][0] == 'O') {
+                dfs1(board,i,0);
+            }
+            if(board[i][n7 - 1] == 'O') {
+                dfs1(board,i,n7 - 1);
+            }
+        }
+        for (int i = 0; i < m7 ; i++) {
+            for (int j = 0; j < n7; j++) {
+                if(board[i][j] == '.') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+
+            }
+        }
+    }
+    void dfs1(char[][] board,int i,int j) {
+        board[i][j] = '.';
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m7 && y >= 0 && y < n7 && board[x][y] == 'O') {
+                dfs(board,x,y);
+            }
+        }
+    }
 
 
 
