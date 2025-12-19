@@ -298,6 +298,24 @@ public class Test {
         }
         return i;
     }
+    //最优除法
+    public String optimalDivision(int[] nums) {
+        StringBuilder s = new StringBuilder();
+        int n = nums.length;
+        if(n == 1) {
+            s.append(nums[0]);
+        } else if(n == 2) {
+            s.append(nums[0]).append("/").append(nums[1]);
+        }else {
+            s.append(nums[0]).append("/").append("(").append(nums[1]);
+            for (int i = 2; i < n; i++) {
+                s.append("/").append(nums[i]);
+            }
+            s.append(")");
+        }
+        return s.toString();
+
+    }
 
 
 

@@ -813,6 +813,54 @@ public class Test {
             }
         }
     }
+    //太平洋大西洋水流问题
+    int m8;
+    int n8;
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        m8 = heights.length;
+        n8 = heights[0].length;
+        boolean[][] v1 = new boolean[m8][n8];
+        boolean[][] v2 = new boolean[m8][n8];
+        List<List<Integer>> ret = new ArrayList<>();
+        for (int j = 0; j < n8; j++) {
+            if(!v1[0][j]) {
+                dfs2(heights,0,j,v1);
+            }
+            if(!v2[m8 - 1][j]) {
+                dfs2(heights,m8 - 1,j,v2);
+            }
+        }
+        for (int i = 0; i < m8; i++) {
+            if(!v1[i][0]) {
+                dfs2(heights,i,0,v1);
+            }
+            if(!v2[i][n8 - 1]) {
+                dfs2(heights,i,n8 - 1,v2);
+            }
+        }
+        for (int i = 0; i < m8; i++) {
+            for (int j = 0; j < n8; j++) {
+                if(v2[i][j] && v1[i][j]) {
+                    List<Integer> tmp = new ArrayList<>();
+                    tmp.add(i);
+                    tmp.add(j);
+                    ret.add(tmp);
+                }
+            }
+        }
+        return ret;
+    }
+    void dfs2(int[][] heights,int i,int j,boolean[][] v) {
+        v[i][j] = true;
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m8 && y >= 0 && y < n8 && !v[x][y] && heights[x][y] >= heights[i][j]) {
+                dfs2(heights,x,y,v);
+            }
+        }
+    }
+
 
 
 
