@@ -316,6 +316,21 @@ public class Test {
         return s.toString();
 
     }
+    //跳跃游戏Ⅱ
+    public int jump(int[] nums) {
+        int left = 0,right = 0;
+        int ret = 0;
+        while (right < nums.length - 1) {
+            int m = 0;
+            for (int i = left; i <= right; i++) {
+                m = Math.max(nums[i] + i, m);
+            }
+            left = right + 1;
+            right = m;
+            ret++;
+        }
+        return ret;
+    }
 
 
 
