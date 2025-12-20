@@ -860,6 +860,44 @@ public class Test {
             }
         }
     }
+    //扫雷游戏
+    int m9;
+    int n9;
+    int[] dx1 = {1,-1,0,0,-1,-1,1,1};
+    int[] dy1 = {0,0,1,-1,1,-1,-1,1};
+
+    public char[][] updateBoard(char[][] board, int[] click) {
+        m9 = board.length;
+        n9 = board[0].length;
+        if(board[click[0]][click[1]] == 'M') {
+            board[click[0]][click[1]] = 'X';
+        }else {
+            dfs3(board,click[0],click[1]);
+        }
+        return board;
+    }
+    void dfs3(char[][] board,int i,int j) {
+        int c = 0;
+        for (int k = 0; k < 8; k++) {
+            int x = i + dx1[k];
+            int y = j + dy1[k];
+            if(x >= 0 && x < m9 && y >= 0 && y < n9 && board[x][y] == 'M') {
+                c++;
+            }
+        }
+        if(c == 0) {
+            board[i][j] = 'B';
+            for (int k = 0; k < 8; k++) {
+                int x = i + dx1[k];
+                int y = j + dy1[k];
+                if(x >= 0 && x < m9 && y >= 0 && y < n9 && board[x][y] == 'E') {
+                    dfs3(board,x,y);
+                }
+            }
+        }else {
+            board[i][j] = (char) (c + '0');
+        }
+    }
 
 
 
