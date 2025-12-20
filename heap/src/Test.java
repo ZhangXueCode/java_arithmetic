@@ -23,4 +23,27 @@ public class Test {
         }
         return h.poll();
     }
+    //数据流中的第k大元素
+    class KthLargest {
+        PriorityQueue<Integer> h;
+        int _k;
+        public KthLargest(int k, int[] nums) {
+            _k = k;
+            h = new PriorityQueue<>();
+            for(int x : nums) {
+                h.offer(x);
+                if(h.size() > _k) {
+                    h.poll();
+                }
+            }
+        }
+        public int add(int val) {
+            h.offer(val);
+            if(h.size() > _k) {
+                h.poll();
+            }
+            return h.peek();
+
+        }
+    }
 }
