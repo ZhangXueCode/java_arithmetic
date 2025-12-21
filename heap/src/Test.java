@@ -1,5 +1,29 @@
-import java.util.PriorityQueue;
+import java.util.*;
 
+class Pair<K, V> {
+    private final K key;
+    private final V value;
+
+    // 构造方法
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    // 静态工厂方法，简化创建
+    public static <K, V> Pair<K, V> of(K key, V value) {
+        return new Pair<>(key, value);
+    }
+
+    // get方法
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
 public class Test {
     //最后一块石头的重量
     public int lastStoneWeight(int[] stones) {
@@ -45,5 +69,36 @@ public class Test {
             return h.peek();
 
         }
+    }
+    //前k个高频词
+    public List<String> topKFrequent(String[] words, int k) {
+        HashMap<String,Integer> hash = new HashMap<>();
+        for(String s : words) {
+            hash.put(s,hash.getOrDefault(s,0) + 1);
+        }
+
+        PriorityQueue<Pair<String,Integer>> h = new PriorityQueue<Pair<String, Integer>>(
+                (a,b) -> {
+                    if(a.getValue().equals(b.getValue())) {
+                        return b.getKey().compareTo(a.getKey());
+                    }
+                    return a.getValue().compareTo(b.getValue());
+                }
+        );
+
+        for(Map.Entry<String,Integer> e : hash.entrySet()) {
+            h.offer(new Pair<>(e.getKey(),e.getValue()));
+            if(h.size() > k) {
+                h.poll();
+            }
+        }
+
+        List<String> ret = new ArrayList<>();
+        while (!h.isEmpty()) {
+            ret.add(h.poll().getKey());
+        }
+        Collections.reverse(ret);
+        return ret;
+
     }
 }
