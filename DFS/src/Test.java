@@ -898,6 +898,43 @@ public class Test {
             board[i][j] = (char) (c + '0');
         }
     }
+    //机器人的运动范围
+    int ret15;
+    int[] dx2 = {0,1};
+    int[] dy2 = {1,0};
+    int m10;
+    int n10;
+    boolean[][] v2;
+    public int wardrobeFinishing(int m, int n, int cnt) {
+        m10 = m;
+        n10 = n;
+        v2 = new boolean[m][n];
+        dfs(0,0,cnt);
+        return ret15;
+    }
+    void dfs(int i, int j, int cnt) {
+        ret15++;
+        v2[i][j] = true;
+        for (int k = 0; k < 2; k++) {
+            int x = i + dx2[k];
+            int y = j + dy2[k];
+            int a = 0,b = 0;
+            while (x != 0) {
+                a += x % 10;
+                x /= 10;
+            }
+            while (y != 0) {
+                b += y % 10;
+                y /= 10;
+            }
+            x = i + dx2[k];
+            y = j + dy2[k];
+            if(x >= 0 && x < m10 && y >= 0 && y < n10 && a + b <= cnt && !v2[x][y]) {
+                dfs(x,y,cnt);
+            }
+        }
+
+    }
 
 
 
