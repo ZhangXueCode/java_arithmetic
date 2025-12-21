@@ -331,6 +331,22 @@ public class Test {
         }
         return ret;
     }
+    //跳跃游戏
+    public boolean canJump(int[] nums) {
+        int left = 0,right = 0;
+        while (right < nums.length - 1) {
+            if(left > right) {
+                return false;
+            }
+            int m = 0;
+            for (int i = left; i <= right; i++) {
+                m = Math.max(nums[i] + i, m);
+            }
+            left = right + 1;
+            right = m;
+        }
+        return true;
+    }
 
 
 
