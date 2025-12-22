@@ -101,4 +101,41 @@ public class Test {
         return ret;
 
     }
+    //数据流的中位数
+    class MedianFinder {
+        //左边一个大根堆 右边一个小根堆维护中位数
+        PriorityQueue<Integer> left;
+        PriorityQueue<Integer> right;
+        public MedianFinder() {
+            left = new PriorityQueue<>((a,b) -> b - a);
+            right = new PriorityQueue<>();
+        }
+        public void addNum(int num) {
+            if(left.size() == right.size()) {
+                if(left.isEmpty() || num <= left.peek()) {
+                    left.offer(num);
+                }else {
+                    right.offer(num);
+                    left.offer(right.poll());
+                }
+            }else {
+                if(num <= left.peek()) {
+                    left.offer(num);
+                    right.offer(left.poll());
+                }else {
+                    right.offer(num);
+                }
+            }
+
+        }
+
+        public double findMedian() {
+            if(left.size() == right.size()) {
+                return (left.peek() + right.peek()) / 2;
+            }else {
+                return left.peek();
+            }
+
+        }
+    }
 }
