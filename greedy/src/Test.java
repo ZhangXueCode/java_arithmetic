@@ -368,6 +368,27 @@ public class Test {
         return -1;
 
     }
+    //单调递增的数字
+    public int monotoneIncreasingDigits(int n) {
+        String ss = String.valueOf(n);
+        char[] s = ss.toCharArray();
+        int i = 0,m = s.length;
+        while (i + 1 < m && s[i] <= s[i + 1]) {
+            i++;
+        }
+        if(i == m - 1) {
+            return n;
+        }
+        while (i >= 1 && s[i] == s[i - 1]) {
+            i--;
+        }
+        s[i]--;
+        for (int j = i + 1; j < m; j++) {
+            s[j] = '9';
+        }
+        return Integer.parseInt(new String(s));
+
+    }
 
 
 
