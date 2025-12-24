@@ -29,4 +29,40 @@ public class Test {
         return image;
 
     }
+    //岛屿数量
+    int m;
+    int n;
+    boolean[][] v;
+    public int numIslands(char[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        v = new boolean[m][n];
+        int ret = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if(grid[i][j] == '1' && !v[i][j]) {
+                    ret++;
+                    bfs(i,j,grid);
+                }
+            }
+        }
+        return ret;
+    }
+    void bfs(int i,int j,char[][] grid) {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{i,j});
+        v[i][j] = true;
+        while (!q.isEmpty()) {
+            int[] t = q.poll();
+            int a = t[0],b = t[1];
+            for (int k = 0; k < 4; k++) {
+                int x = a + dx[k];
+                int y = b + dy[k];
+                if(x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1' && !v[x][y]) {
+                    q.add(new int[]{x,y});
+                    v[x][y] = true;
+                }
+            }
+        }
+    }
 }
