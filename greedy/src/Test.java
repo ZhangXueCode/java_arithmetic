@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Test {
@@ -403,6 +404,27 @@ public class Test {
         ret += startValue - target;
         return ret;
 
+    }
+    //合并区间
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals,(v1,v2) -> {
+            return v1[0] - v2[0];
+        });
+        int left = intervals[0][0],right = intervals[0][1];
+        List<int[]> ret = new ArrayList<>();
+        for (int i = 1; i < intervals.length; i++) {
+            int a = intervals[i][0];
+            int b = intervals[i][1];
+            if(a <= right) {
+                right = Math.max(b,right);
+            }else {
+                ret.add(new int[]{left,right});
+                left = a;
+                right = b;
+            }
+        }
+        ret.add(new int[]{left,right});
+        return ret.toArray(new int[0][]);
     }
 
 
