@@ -65,4 +65,44 @@ public class Test {
             }
         }
     }
+    //岛屿的最大面积
+    int m1;
+    int n1;
+    int c;
+    boolean[][] vi;
+    public int maxAreaOfIsland(int[][] grid) {
+        m1 = grid.length;
+        n1 = grid[0].length;
+        vi = new boolean[m1][n1];
+        int ret = 0;
+        for (int i = 0; i < m1; i++) {
+            for (int j = 0; j < n1; j++) {
+                if(grid[i][j] == 1 && !vi[i][j]) {
+                    c = 0;
+                    bfs(grid,i,j);
+                    ret = Math.max(c,ret);
+                }
+            }
+        }
+        return ret;
+    }
+    void bfs(int[][] grid,int i,int j) {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{i,j});
+        c++;
+        vi[i][j] = true;
+        while (!q.isEmpty()) {
+            int[] t = q.poll();
+            int a = t[0],b = t[1];
+            for (int k = 0; k < 4; k++) {
+                int x = a + dx[k];
+                int y = b + dy[k];
+                if(x >= 0 && x < m1 && y >= 0 && y < n1 && grid[x][y] == 1 && !vi[x][y]) {
+                    q.add(new int[]{x,y});
+                    c++;
+                    vi[x][y] = true;
+                }
+            }
+        }
+    }
 }
