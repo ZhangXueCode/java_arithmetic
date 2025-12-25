@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Test {
     //不同路径
     int[][] a;
@@ -42,6 +44,28 @@ public class Test {
             }
         }
         arr[pose] = ret;
+        return ret;
+    }
+    //猜数字大小Ⅱ
+    int[][] memo;
+    public int getMoneyAmount(int n) {
+        memo = new int[n + 1][n + 1];
+        return dfs1(1,n);
+    }
+    int dfs1(int i,int j) {
+        if(i >= j) {
+            return 0;
+        }
+        if(memo[i][j] != 0) {
+            return memo[i][j];
+        }
+        int ret = Integer.MAX_VALUE;
+        for (int k = i; k <= j; k++) {
+            int x = dfs1(i,k-1);
+            int y = dfs1(k + 1,j);
+            ret = Math.min(ret,Math.max(x,y) + k);
+        }
+        memo[i][j] = ret;
         return ret;
     }
 }
