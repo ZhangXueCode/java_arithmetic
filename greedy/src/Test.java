@@ -426,6 +426,26 @@ public class Test {
         ret.add(new int[]{left,right});
         return ret.toArray(new int[0][]);
     }
+    //无重叠区间
+    public int eraseOverlapIntervals(int[][] intervals) {
+        Arrays.sort(intervals,(v1,v2) -> {
+            return v1[0] - v2[0];
+        });
+        int ret = 0;
+        int left = intervals[0][0],right = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            int a = intervals[i][0];
+            int b = intervals[i][1];
+            if(a < right) {
+                ret++;
+                right = Math.min(right,b);
+            }else {
+                right = b;
+            }
+        }
+        return ret;
+
+    }
 
 
 
