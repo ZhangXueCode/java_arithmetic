@@ -105,4 +105,53 @@ public class Test {
             }
         }
     }
+    //被围绕的区域
+    int m2;
+    int n2;
+    public void solve(char[][] board) {
+        m2 = board.length;
+        n2 = board[0].length;
+        for (int i = 0; i < m2; i++) {
+            if(board[i][0] == 'O') {
+                bfs(board,i,0);
+            }
+            if(board[i][n2 - 1] == 'O') {
+                bfs(board,i,n2 - 1);
+            }
+        }
+        for (int j = 0; j < n2; j++) {
+            if(board[0][j] == 'O') {
+                bfs(board,0,j);
+            }
+            if(board[m2 - 1][j] == 'O') {
+                bfs(board,m2 - 1,j);
+            }
+        }
+        for (int i = 0; i < m2; i++) {
+            for (int j = 0; j < n2; j++) {
+                if(board[i][j] == '.') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+    void bfs(char[][] board,int i,int j) {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{i,j});
+        board[i][j] = '.';
+        while (!q.isEmpty()) {
+            int[] t = q.poll();
+            int a = t[0],b = t[1];
+            for (int k = 0; k < 4; k++) {
+                int x = a + dx[k];
+                int y = b + dy[k];
+                if(x >= 0 && x < m2 && y >= 0 && y < n2 && board[x][y] == 'O') {
+                    board[x][y] = '.';
+                    q.offer(new int[]{x,y});
+                }
+            }
+        }
+    }
 }
