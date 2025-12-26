@@ -68,4 +68,38 @@ public class Test {
         memo[i][j] = ret;
         return ret;
     }
+    //矩阵中的最长递增路径
+    int m2;
+    int n2;
+    int[][] m;
+    int[] dx = {0,0,1,-1};
+    int[] dy = {1,-1,0,0};
+    public int longestIncreasingPath(int[][] matrix) {
+        m2 = matrix.length;
+        n2 = matrix[0].length;
+        m = new int[m2][n2];
+        int ret = 0;
+        for (int i = 0; i < m2; i++) {
+            for (int j = 0; j < n2; j++) {
+                ret = Math.max(ret,dfs(matrix,i,j));
+            }
+        }
+        return ret;
+
+    }
+    int dfs(int[][] matrix,int i,int j) {
+        if(m[i][j] != 0) {
+            return m[i][j];
+        }
+        int ret = 1;
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m2 && y >= 0 && y < n2 && matrix[x][y] > matrix[i][j]) {
+                ret = Math.max(ret,dfs(matrix,x,y) + 1);
+            }
+        }
+        m[i][j] = ret;
+        return ret;
+    }
 }
