@@ -154,4 +154,42 @@ public class Test {
             }
         }
     }
+    //迷宫中距离入口最近的出口
+    int m3;
+    int n3;
+    boolean[][] vis;
+    public int nearestExit(char[][] maze, int[] entrance) {
+        m3 = maze.length;
+        n3 = maze[0].length;
+        vis = new boolean[m3][n3];
+        int x = entrance[0],y = entrance[1];
+        return bfs1(maze,x,y);
+    }
+    int bfs1(char[][] maze,int i,int j) {
+        int ret = 0;
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{i,j});
+        vis[i][j] = true;
+        while (!q.isEmpty()) {
+            int l = q.size();
+            ret++;
+            for (int k = 0; k < l; k++) {
+                int[] t = q.poll();
+                int a = t[0],b = t[1];
+                for (int o = 0; o < 4; o++) {
+                    int x = a + dx[o];
+                    int y = b + dy[o];
+                    if(x >= 0 && x < m3 && y >= 0 && y < n3 && !vis[x][y] && maze[x][y] == '.') {
+                        if(x == 0 || x == m3 - 1 || y == 0 || y == n3 - 1) {
+                            return ret;
+                        }
+                        q.add(new int[]{x,y});
+                        vis[x][y] = true;
+                    }
+                }
+            }
+
+        }
+        return -1;
+    }
 }
