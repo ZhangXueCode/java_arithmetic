@@ -446,6 +446,26 @@ public class Test {
         return ret;
 
     }
+    //用最少数量的箭引爆气球
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points,(v1,v2) -> {
+            return v1[0] > v2[0] ? 1 : -1;
+        });
+        int right = points[0][1],n = points.length;
+        int ret = 1;
+        for (int i = 1; i < n; i++) {
+            int a = points[i][0];
+            int b = points[i][1];
+            if(a <= right) {
+                right = Math.min(right,b);
+            }else {
+                ret++;
+                right = b;
+            }
+        }
+        return ret;
+    }
+
 
 
 
