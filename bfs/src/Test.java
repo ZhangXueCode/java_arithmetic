@@ -1,5 +1,4 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Test {
     //图像渲染
@@ -192,4 +191,45 @@ public class Test {
         }
         return -1;
     }
+    //最小基因变化
+
+    public int minMutation(String startGene, String endGene, String[] bank) {
+        Set<String> vis = new HashSet<>();
+        char[] a = { 'A', 'C', 'G', 'T' };
+        Set<String> hash = new HashSet<>(Arrays.asList(bank));
+        if (startGene.equals(endGene)) {
+            return 0;
+        }
+        if (!hash.contains(endGene)) {
+            return -1;
+        }
+        Queue<String> q = new LinkedList<>();
+        q.add(startGene);
+        vis.add(startGene);
+        int ret = 0;
+        while (!q.isEmpty()) {
+            int l = q.size();
+            ret++;
+            for (int i = 0; i < l; i++) {
+                String s = q.poll();
+                for (int j = 0; j < 8; j++) {
+                    char[] ss = s.toCharArray();
+                    for (char c : a) {
+                        ss[j] = c;
+                        String tmp = new String(ss);
+                        if (hash.contains(tmp) && !vis.contains(tmp)) {
+                            if (tmp.equals(endGene)) {
+                                return ret;
+                            }
+                            vis.add(tmp);
+                            q.add(tmp);
+                        }
+                    }
+
+                }
+            }
+        }
+        return -1;
+    }
+
 }
