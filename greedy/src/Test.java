@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Test {
     //柠檬水找零
@@ -464,6 +461,49 @@ public class Test {
             }
         }
         return ret;
+    }
+    //整数替换
+    HashMap<Long,Integer> hash;
+    public int integerReplacement1(int n) {
+        hash = new HashMap<>();
+        return dfs(n);
+    }
+    int dfs(long n) {
+        if(n == 1) {
+            return 0;
+        }
+        if(hash.containsKey(n)) {
+            return hash.get(n);
+        }
+        if(n % 2 == 0) {
+            hash.put(n,dfs(n / 2) + 1);
+        }else {
+            int t = Math.min(dfs(n - 1),dfs(n + 1));
+            hash.put(n,t + 1);
+        }
+        return hash.get(n);
+    }
+    public int integerReplacement(int n) {
+        int ret = 0;
+        while (n > 1) {
+            if(n % 2 == 0) {
+                n /= 2;
+                ret++;
+            }else {
+                if(n == 3) {
+                    ret += 2;
+                    n = 1;
+                } else if (n % 4 == 1) {
+                    n /= 2;
+                    ret += 2;
+                }else {
+                    n = n / 2 + 1;
+                    ret += 2;
+                }
+            }
+        }
+        return ret;
+
     }
 
 
