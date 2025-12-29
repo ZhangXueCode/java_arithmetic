@@ -505,6 +505,51 @@ public class Test {
         return ret;
 
     }
+    //俄罗斯套娃信封
+    public int maxEnvelopes1(int[][] envelopes) {
+        int n = envelopes.length;
+        Arrays.sort(envelopes,(v1,v2) -> {
+            return v1[0] - v2[0];
+        });
+        int[] dp = new int[n];
+        Arrays.fill(dp,1);
+        int ret = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if(envelopes[i][0] > envelopes[j][0] && envelopes[i][1] > envelopes[j][1]) {
+                    dp[i] = Math.max(dp[i],dp[j] + 1);
+                }
+            }
+            ret = Math.max(ret,dp[i]);
+        }
+        return ret;
+
+    }
+    public int maxEnvelopes(int[][] envelopes) {
+        Arrays.sort(envelopes,(v1,v2) -> {
+            return v1[0] == v2[0] ? v2[1] - v1[1] : v1[0] - v2[0];
+        });
+        ArrayList<Integer> ret = new ArrayList<>();
+        ret.add(envelopes[0][1]);
+        for (int i = 1; i < envelopes.length; i++) {
+            int b = envelopes[i][1];
+            if(b > ret.get(ret.size() - 1)) {
+                ret.add(b);
+            }else {
+                int left = 0,right = ret.size() - 1;
+                while (left < right) {
+                    int mid = (left + right) / 2;
+                    if(ret.get(mid) >= b) {
+                        right = mid;
+                    }else {
+                        left = mid + 1;
+                    }
+                }
+                ret.set(left,b);
+            }
+        }
+        return ret.size();
+    }
 
 
 
