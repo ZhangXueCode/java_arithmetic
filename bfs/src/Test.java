@@ -231,5 +231,45 @@ public class Test {
         }
         return -1;
     }
+    //单词接龙
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> hash = new HashSet<>(wordList);
+        Set<String> vis = new HashSet<>();
+        if(beginWord.equals(endWord)) {
+            return 1;
+        }
+        if(!hash.contains(endWord)) {
+            return 0;
+        }
+        Queue<String> q = new LinkedList<>();
+        q.add(beginWord);
+        vis.add(beginWord);
+        int ret = 1;
+        while (!q.isEmpty()) {
+            int l = q.size();
+            ret++;
+            while (l-- > 0) {
+                String t = q.poll();
+                int len = t.length();
+                for (int i = 0; i < len; i++) {
+                    char[] s = t.toCharArray();
+                    for (char j = 'a'; j <= 'z'; j++) {
+                        s[i] = j;
+                        String tmp = new String(s);
+                        if(hash.contains(tmp) && !vis.contains(tmp)) {
+                            if(tmp.equals(endWord)) {
+                                return ret;
+                            }
+                            vis.add(tmp);
+                            q.add(tmp);
+                        }
+
+                    }
+                }
+            }
+        }
+        return 0;
+
+    }
 
 }
