@@ -271,5 +271,67 @@ public class Test {
         return 0;
 
     }
+    //为高尔夫比赛砍树
+    int m4;
+    int n4;
+    public int cutOffTree(List<List<Integer>> forest) {
+        m4 = forest.size();
+        n4 = forest.get(0).size();
+        List<int[]> trees = new ArrayList<>();
+        for (int i = 0; i < m4; i++) {
+            for (int j = 0; j < n4; j++) {
+                if(forest.get(i).get(j) > 1) {
+                    trees.add(new int[]{i,j});
+                }
+            }
+        }
+        Collections.sort(trees,(a,b) -> {
+            return forest.get(a[0]).get(a[1]) - forest.get(b[0]).get(b[1]);
+        });
+        int ret = 0;
+        int bx = 0,by = 0;
+        for(int[] tree : trees) {
+            int x = tree[0],y = tree[1];
+            int a = bfs(forest,bx,by,x,y);
+            if(a == -1) {
+                return -1;
+            }
+            ret += a;
+            bx = x;
+            by = y;
+        }
+        return ret;
+
+    }
+    int bfs(List<List<Integer>> forest,int bx,int by,int ex,int ey) {
+        if(bx == ex && by == ey) {
+            return 0;
+        }
+        boolean[][] vis = new boolean[m4][n4];
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{bx,by});
+        vis[bx][by] = true;
+        int ret = 0;
+        while (!q.isEmpty()) {
+            int l = q.size();
+            ret++;
+            while (l-- > 0) {
+                int[] t = q.poll();
+                int a = t[0],b = t[1];
+                for (int i = 0; i < 4; i++) {
+                    int x = a + dx[i];
+                    int y = b + dy[i];
+                    if(x >= 0 && x < m4 && y >= 0 && y < n4 && forest.get(x).get(y) != 0 && !vis[x][y]) {
+                        if(x == ex && y == ey) {
+                            return ret;
+                        }
+                        q.add(new int[]{x,y});
+                        vis[x][y] = true;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
 
 }
