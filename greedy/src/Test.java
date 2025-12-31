@@ -581,6 +581,37 @@ public class Test {
         }
 
     }
+    //距离相等的条形码
+    public int[] rearrangeBarcodes(int[] barcodes) {
+        int n = barcodes.length;
+        int[] ret = new int[n];
+        Map<Integer,Integer> hash = new HashMap<>();
+        int maxVal = 0,maxCount = 0;
+        for(int x : barcodes) {
+            hash.put(x,hash.getOrDefault(x,0) + 1);
+            if(maxCount < hash.get(x)) {
+                maxCount = hash.get(x);
+                maxVal = x;
+            }
+        }
+        int index = 0;
+        for (int i = 0; i < maxCount; i++) {
+            ret[index] = maxVal;
+            index += 2;
+        }
+        hash.remove(maxVal);
+        for(int x : hash.keySet()) {
+            for (int i = 0; i < hash.get(x); i++) {
+                if(index >= n) {
+                    index = 1;
+                }
+                ret[index] = x;
+                index += 2;
+            }
+        }
+        return ret;
+
+    }
 
 
 
