@@ -333,5 +333,38 @@ public class Test {
         }
         return -1;
     }
+    //01矩阵
+    public int[][] updateMatrix(int[][] mat) {
+        int m = mat.length;
+        int n = mat[0].length;
+        int[][] dist = new int[m][n];
+        for(int[] x : dist) {
+            Arrays.fill(x,-1);
+        }
+        Queue<int[]> q = new LinkedList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if(mat[i][j] == 0) {
+                    dist[i][j] = 0;
+                    q.add(new int[]{i,j});
+                }
+            }
+        }
+        //由于dist已经存着层数 不需要step与len来记录是多少层了
+        while (!q.isEmpty()) {
+            int[] t = q.poll();
+            int a = t[0],b = t[1];
+            for (int i = 0; i < 4; i++) {
+                int x = a + dx[i];
+                int y = b + dy[i];
+                if(x >= 0 && x < m && y >= 0 && y < n && dist[x][y] == -1) {
+                    dist[x][y] = dist[a][b] + 1;
+                    q.add(new int[]{x,y});
+                }
+            }
+        }
+        return dist;
+
+    }
 
 }
