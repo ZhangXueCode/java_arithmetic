@@ -612,6 +612,75 @@ public class Test {
         return ret;
 
     }
+    //重构字符串
+    public String reorganizeString1(String s) {
+        int n = s.length();
+        char[] tmp = new char[n];
+        Map<Character,Integer> hash = new HashMap<>();
+        int maxCount = 0;
+        char maxVal = ' ';
+        for(char c : s.toCharArray()) {
+            hash.put(c,hash.getOrDefault(c,0) + 1);
+            if(maxCount < hash.get(c)) {
+                maxCount = hash.get(c);
+                maxVal = c;
+            }
+        }
+        if(maxCount > (n + 1) / 2) {
+            return "";
+        }
+        int index = 0;
+        for (int i = 0; i < maxCount; i++) {
+            tmp[index] = maxVal;
+            index += 2;
+        }
+        hash.remove(maxVal);
+        for(char c : hash.keySet()) {
+            for (int i = 0; i < hash.get(c); i++) {
+                if(index >= n) {
+                    index = 1;
+                }
+                tmp[index] = c;
+                index += 2;
+            }
+        }
+        return new String(tmp);
+
+    }
+    public String reorganizeString(String s) {
+        int[] hash = new int[26];
+        int n = s.length();
+        char[] tmp = new char[n];
+        int maxCount = 0;
+        char maxVal = ' ';
+        for(char c : s.toCharArray()) {
+            hash[c - 'a']++;
+            if(maxCount < hash[c - 'a']) {
+                maxCount = hash[c - 'a'];
+                maxVal = c;
+            }
+        }
+        if(maxCount > (n + 1) / 2) {
+            return "";
+        }
+        int index = 0;
+        for (int i = 0; i < maxCount; i++) {
+            tmp[index] = maxVal;
+            index += 2;
+        }
+        hash[maxVal - 'a'] = 0;
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < hash[i]; j++) {
+                if(index >= n) {
+                    index = 1;
+                }
+                tmp[index] = (char)(i + 'a');
+                index += 2;
+            }
+        }
+        return new String(tmp);
+
+    }
 
 
 
