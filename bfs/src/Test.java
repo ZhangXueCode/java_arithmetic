@@ -1,3 +1,5 @@
+import com.sun.jdi.connect.spi.TransportService;
+
 import java.util.*;
 
 public class Test {
@@ -480,6 +482,152 @@ public class Test {
         return tmp == 0 ? -1 : tmp;
 
 
+    }
+    //课程表
+    public boolean canFinish(int n, int[][] p) {
+        //统计入度
+        int[] in = new int[n];
+        //存连接关系
+        Map<Integer,List<Integer>> hash = new HashMap<>();
+        for (int i = 0; i < p.length; i++) {
+            //b -> a
+            int a = p[i][0],b = p[i][1];
+            if(!hash.containsKey(b)) {
+                hash.put(b,new ArrayList<>());
+            }
+            hash.get(b).add(a);
+            in[a]++;
+        }
+        //拓扑排序
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if(in[i] == 0) {
+                q.add(i);
+            }
+        }
+        while (!q.isEmpty()) {
+            int t = q.poll();
+            for(int x : hash.getOrDefault(t,new ArrayList<>())) {
+                in[x]--;
+                if(in[x] == 0) {
+                    q.add(x);
+                }
+            }
+        }
+        for(int x : in) {
+            if(x != 0) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+    //课程表Ⅱ
+    public int[] findOrder(int n, int[][] p) {
+        int[] in = new int[n];
+        Map<Integer,List<Integer>> hash = new HashMap<>();
+        for (int i = 0; i < p.length; i++) {
+            int a = p[i][0],b = p[i][1];
+            if(!hash.containsKey(b)) {
+                hash.put(b,new ArrayList<>());
+            }
+            hash.get(b).add(a);
+            in[a]++;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if(in[i] == 0) {
+                q.add(i);
+            }
+        }
+        int[] ret = new int[n];
+        int index = 0;
+        while (!q.isEmpty()) {
+            int t = q.poll();
+            ret[index++] = t;
+            for(int x : hash.getOrDefault(t,new ArrayList<>())) {
+                in[x]--;
+                if(in[x] == 0) {
+                    q.add(x);
+                }
+            }
+        }
+        if(index == n) {
+            return ret;
+        }
+        return new int[0];
+
+    }
+    //火星词典
+    Map<Character,Set<Character>> hash = new HashMap<>();
+    Map<Character,Integer> in = new HashMap<>();
+    boolean check;
+    public String alienOrder(String[] words) {
+        for(String s : words) {
+            for(char c : s.toCharArray()) {
+                if(!in.containsKey(c)) {
+                    in.put(c,0);
+                }
+            }
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                String a = words[i],b = words[j];
+                add(a,b);
+                if(check) {
+                    return "";
+                }
+            }
+        }
+        Queue<Character> q = new LinkedList<>();
+        for(Character c : in.keySet()) {
+            if(in.get(c) == 0) {
+                q.add(c);
+            }
+        }
+        StringBuilder s = new StringBuilder();
+        while (!q.isEmpty()) {
+            char t = q.poll();
+            s.append(t);
+            if(!hash.containsKey(t)) {
+                continue;
+            }
+            for(Character c : hash.get(t)) {
+                in.put(c,in.get(c) - 1);
+                if(in.get(c) == 0) {
+                    q.add(c);
+                }
+            }
+        }
+        for(char c : in.keySet()) {
+            if(in.get(c) != 0) {
+                return "";
+            }
+        }
+        return s.toString();
+
+    }
+    void add(String a,String b) {
+        int n = Math.min(a.length(),b.length());
+        int i = 0;
+        for (;i < n;i++) {
+            char ch1 = a.charAt(i);
+            char ch2 = b.charAt(i);
+            if(ch1 != ch2) {
+                if(!hash.containsKey(ch1)) {
+                    hash.put(ch1,new HashSet<>());
+                }
+                if(!hash.get(ch1).contains(ch2)) {
+                    hash.get(ch1).add(ch2);
+                    in.put(ch2,in.get(ch2) + 1);
+                }
+                break;
+            }
+        }
+        if(i == b.length() && i < a.length()) {
+            check = true;
+        }
     }
 
 }
