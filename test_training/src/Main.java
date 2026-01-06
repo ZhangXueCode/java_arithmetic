@@ -1,7 +1,38 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+class Read{ //⾃定义快读 Read
+    StringTokenizer st = new StringTokenizer("");
+    BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+    String next() throws IOException {
+        while(!st.hasMoreTokens()){
+            st = new StringTokenizer(bf.readLine());
+        }
+        return st.nextToken();
+    }
+
+    String nextLine() throws IOException
+    {
+        return bf.readLine();
+    }
+
+    int nextInt() throws IOException
+    {
+        return Integer.parseInt(next());
+    }
+
+    long nextLong() throws IOException
+    {
+        return Long.parseLong(next());
+    }
+
+    double nextDouble() throws IOException
+    {
+        return Double.parseDouble(next());
+    }
+}
 public class Main {
     //Day 1
     //数字统计
@@ -95,28 +126,92 @@ public class Main {
 //    }
 
     //数组中两个字符串的最小距离
-    public static void main(String[] args) throws Throwable {
-        BufferedReader reader = new BufferedReader(new
-                InputStreamReader(System.in));
-        int n = Integer.parseInt(reader.readLine());
-        String[] str = reader.readLine().split(" ");
-        String s1 = str[0], s2 = str[1];
-        int prev1 = -1, prev2 = -1, ret = 0x3f3f3f3f;
-        for (int i = 0; i < n; i++) {
-            String s = reader.readLine();
-            if (s.equals(s1)) { // 去前⾯找最近的 s2
-                if (prev2 != -1) {
-                    ret = Math.min(ret, i - prev2);
-                }
-                prev1 = i;
-            } else if (s.equals(s2)) {// 去前⾯找最近的 s1
-                if (prev1 != -1) {
-                    ret = Math.min(ret, i - prev1);
-                }
-                prev2 = i;
+//    public static void main(String[] args) throws Throwable {
+//        BufferedReader reader = new BufferedReader(new
+//                InputStreamReader(System.in));
+//        int n = Integer.parseInt(reader.readLine());
+//        String[] str = reader.readLine().split(" ");
+//        String s1 = str[0], s2 = str[1];
+//        int prev1 = -1, prev2 = -1, ret = 0x3f3f3f3f;
+//        for (int i = 0; i < n; i++) {
+//            String s = reader.readLine();
+//            if (s.equals(s1)) { // 去前⾯找最近的 s2
+//                if (prev2 != -1) {
+//                    ret = Math.min(ret, i - prev2);
+//                }
+//                prev1 = i;
+//            } else if (s.equals(s2)) {// 去前⾯找最近的 s1
+//                if (prev1 != -1) {
+//                    ret = Math.min(ret, i - prev1);
+//                }
+//                prev2 = i;
+//            }
+//        }
+//        System.out.println(ret == 0x3f3f3f3f ? -1 : ret);
+//    }
+    //Day 03
+    //简写单词
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        StringBuilder ss = new StringBuilder();
+//        // 注意 hasNext 和 hasNextLine 的区别
+//        while (in.hasNext()) { // 注意 while 处理多个 case
+//            String s = in.next();
+//            ss.append(s.toUpperCase().charAt(0));
+//        }
+//        System.out.print(ss.toString());
+//    }
+    //dd爱框框
+//    public static void main(String[] args) throws IOException {
+//        Read in = new Read();
+//        int n = in.nextInt(),x = in.nextInt();
+//        int[] a = new int[n + 1];
+//        for(int i = 1;i <= n;i++) {
+//            a[i] = in.nextInt();
+//        }
+//        int sum = 0;
+//        int left = 1,right = 1,retL = 0, retR = 0,ret = n;
+//        while(right <= n) {
+//            sum += a[right];
+//            while(sum >= x) {
+//                if(right - left + 1 < ret) {
+//                    ret = right - left + 1;
+//                    retL = left;
+//                    retR = right;
+//                }
+//                sum -= a[left];
+//                left++;
+//            }
+//            right++;
+//        }
+//        System.out.println(retL + " " + retR);
+//    }
+    //除2
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt(),k = in.nextInt();
+        long sum = 0;
+        PriorityQueue<Integer> h = new PriorityQueue<>((a,b) -> {
+            return b - a;
+        });
+        for(int i = 0;i < n;i++) {
+            long a = in.nextLong();
+            sum += a;
+            if(a % 2 == 0) {
+                h.add((int)a);
             }
         }
-        System.out.println(ret == 0x3f3f3f3f ? -1 : ret);
+        while(!h.isEmpty() && k-- > 0) {
+            long t = h.poll() / 2;
+            sum -= t;
+            if(t % 2 == 0) {
+                h.add((int)t);
+            }
+        }
+        System.out.print(sum);
     }
+
+
+
 
 }
