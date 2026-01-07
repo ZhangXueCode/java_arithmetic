@@ -187,28 +187,108 @@ public class Main {
 //        System.out.println(retL + " " + retR);
 //    }
     //除2
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt(),k = in.nextInt();
+//        long sum = 0;
+//        PriorityQueue<Integer> h = new PriorityQueue<>((a,b) -> {
+//            return b - a;
+//        });
+//        for(int i = 0;i < n;i++) {
+//            long a = in.nextLong();
+//            sum += a;
+//            if(a % 2 == 0) {
+//                h.add((int)a);
+//            }
+//        }
+//        while(!h.isEmpty() && k-- > 0) {
+//            long t = h.poll() / 2;
+//            sum -= t;
+//            if(t % 2 == 0) {
+//                h.add((int)t);
+//            }
+//        }
+//        System.out.print(sum);
+//    }
+    //Day 04
+    //Fib
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int a = 0,b = 1,c = 1;
+//        while(n > c) {
+//            a = b;
+//            b = c;
+//            c = a + b;
+//        }
+//        System.out.print(Math.min(c - n,n - b));
+//    }
+    //单词搜索
+    int[] dx = {0,0,1,-1};
+    int[] dy = {1,-1,0,0};
+    boolean[][] v;
+    int m;
+    int n;
+    public boolean exist (String[] board, String word) {
+        n = board[0].length();
+        m = board.length;
+        v = new boolean[m][n];
+        for(int i = 0;i < m;i++) {
+            for(int j = 0;j < n;j++) {
+                if(board[i].charAt(j) == word.charAt(0) && !v[i][j]) {
+                    if(dfs(board,word,i,j,1)) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
+
+    }
+    boolean dfs(String[] board, String word,int i,int j,int pose) {
+        if(pose == word.length()) {
+            return true;
+        }
+        v[i][j] = true;
+        for(int k = 0;k < 4;k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if(x >= 0 && x < m && y >= 0 && y < n && !v[x][y] && board[x].charAt(y) == word.charAt(pose)) {
+                if(dfs(board,word,x,y,pose + 1)) {
+                    return true;
+                }
+            }
+        }
+        v[i][j] = false;
+        return false;
+    }
+    //杨辉三角
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt(),k = in.nextInt();
-        long sum = 0;
-        PriorityQueue<Integer> h = new PriorityQueue<>((a,b) -> {
-            return b - a;
-        });
-        for(int i = 0;i < n;i++) {
-            long a = in.nextLong();
-            sum += a;
-            if(a % 2 == 0) {
-                h.add((int)a);
+        int n = in.nextInt();
+        int[][] dp = new int[n + 1][n + 1];
+        for(int i = 1;i <= n;i++) {
+            dp[i][1] = 1;
+        }
+        for(int i = 2;i <= n;i++) {
+            for(int j = 2;j <= n;j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1];
             }
         }
-        while(!h.isEmpty() && k-- > 0) {
-            long t = h.poll() / 2;
-            sum -= t;
-            if(t % 2 == 0) {
-                h.add((int)t);
+        for(int i = 1;i <= n;i++) {
+            for(int j = 1;j <= i;j++) {
+                StringBuilder s = new StringBuilder();
+                int len = Integer.toString(dp[i][j]).length();
+                for(int k = 0;k < 5 - len;k++) {
+                    s.append(" ");
+                }
+                System.out.print(s.toString() + dp[i][j]);
+
+
             }
+            System.out.println();
         }
-        System.out.print(sum);
     }
 
 
