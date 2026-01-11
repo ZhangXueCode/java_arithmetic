@@ -264,31 +264,97 @@ public class Main {
         return false;
     }
     //杨辉三角
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        int[][] dp = new int[n + 1][n + 1];
-        for(int i = 1;i <= n;i++) {
-            dp[i][1] = 1;
-        }
-        for(int i = 2;i <= n;i++) {
-            for(int j = 2;j <= n;j++) {
-                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1];
-            }
-        }
-        for(int i = 1;i <= n;i++) {
-            for(int j = 1;j <= i;j++) {
-                StringBuilder s = new StringBuilder();
-                int len = Integer.toString(dp[i][j]).length();
-                for(int k = 0;k < 5 - len;k++) {
-                    s.append(" ");
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int[][] dp = new int[n + 1][n + 1];
+//        for(int i = 1;i <= n;i++) {
+//            dp[i][1] = 1;
+//        }
+//        for(int i = 2;i <= n;i++) {
+//            for(int j = 2;j <= n;j++) {
+//                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1];
+//            }
+//        }
+//        for(int i = 1;i <= n;i++) {
+//            for(int j = 1;j <= i;j++) {
+//                StringBuilder s = new StringBuilder();
+//                int len = Integer.toString(dp[i][j]).length();
+//                for(int k = 0;k < 5 - len;k++) {
+//                    s.append(" ");
+//                }
+//                System.out.print(s.toString() + dp[i][j]);
+//
+//
+//            }
+//            System.out.println();
+//        }
+//    }
+    //Day-05
+    //拼凑最大得分
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        for(int i = 0;i < n;i++) {
+//            int a = in.nextInt();
+//            int b = in.nextInt();
+//            int c = in.nextInt();
+//            int x = Math.min(a,Math.min(b,c));
+//            int y = Math.max(0,b - x - 1);
+//            System.out.println(2 * x + y);
+//
+//        }
+//    }
+    //腐烂的苹果
+    boolean[][] vis;
+    public int rotApple (ArrayList<ArrayList<Integer>> grid) {
+        Queue<int[]> q = new LinkedList<>();
+        int m = grid.size();
+        int n = grid.get(0).size();
+        vis = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid.get(i).get(j) == 2 && !vis[i][j]) {
+                    q.add(new int[] {i, j});
+                    vis[i][j] = true;
                 }
-                System.out.print(s.toString() + dp[i][j]);
-
+            }
+        }
+        int step = 0;
+        while (!q.isEmpty()) {
+            int l = q.size();
+            step++;
+            while (l-- > 0) {
+                int[] t = q.poll();
+                int a = t[0], b = t[1];
+                for (int k = 0; k < 4; k++) {
+                    int x = a + dx[k];
+                    int y = b + dy[k];
+                    if (x >= 0 && x < m && y >= 0 && y < n && grid.get(x).get(y) == 1 &&
+                            !vis[x][y]) {
+                        q.add(new int[] {x, y});
+                        vis[x][y] = true;
+                    }
+                }
 
             }
-            System.out.println();
         }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid.get(i).get(j) == 1 && !vis[i][j]) {
+                    return -1;
+                }
+            }
+        }
+        return step - 1;
+    }
+    //约瑟夫环
+    public int LastRemaining_Solution (int n, int m) {
+        int f = 0;
+        for(int i = 2;i <= n;i++) {
+            f = (f + m) % i;
+        }
+        return f;
     }
 
 
