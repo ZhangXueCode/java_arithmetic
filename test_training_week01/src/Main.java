@@ -2,7 +2,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-
+class ListNode {
+    int val;
+    ListNode next = null;
+    public ListNode(int val) {
+      this.val = val;
+    }
+}
 class Read{ //⾃定义快读 Read
     StringTokenizer st = new StringTokenizer("");
     BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
@@ -356,6 +362,93 @@ public class Main {
         }
         return f;
     }
+    //Day-06
+    //高精度相加
+    public String solve (String s, String t) {
+        StringBuilder ret = new StringBuilder();
+        int tmp = 0;
+        int i = s.length() - 1,j = t.length() - 1;
+        while(i >= 0 || j >= 0 || tmp > 0) {
+            if(i >= 0) {
+                tmp += s.charAt(i) - '0';
+                i--;
+            }
+            if(j >= 0) {
+                tmp += t.charAt(j) - '0';
+                j--;
+            }
+            ret.append((char)(tmp % 10 + '0'));
+            tmp /= 10;
+        }
+        return ret.reverse().toString();
+    }
+    //链表相加
+    public ListNode reverse(ListNode head) {
+        ListNode newHead = new ListNode(0);
+        ListNode cur = head;
+        while(cur != null) {
+            ListNode next = cur.next;
+            cur.next = newHead.next;
+            newHead.next = cur;
+            cur = next;
+        }
+        return newHead.next;
+    }
+    public ListNode addInList (ListNode head1, ListNode head2) {
+        ListNode ret = new ListNode(0);
+        ListNode pre = ret;
+        ListNode newH1 = reverse(head1);
+        ListNode newH2 = reverse(head2);
+        ListNode cur1 = newH1;
+        ListNode cur2 = newH2;
+        int tmp = 0;
+        while(cur1 != null || cur2 != null || tmp > 0) {
+            if(cur1 != null) {
+                tmp += cur1.val;
+                cur1 = cur1.next;
+            }
+            if(cur2 != null) {
+                tmp += cur2.val;
+                cur2 = cur2.next;
+            }
+            ListNode t = new ListNode(tmp % 10);
+            pre.next = t;
+            pre = t;
+            tmp /= 10;
+        }
+        return reverse(ret.next);
+    }
+    //高精度相乘
+    public String solve1 (String ss, String tt) {
+        char[] s = new StringBuilder(ss).reverse().toString().toCharArray();
+        char[] t = new StringBuilder(tt).reverse().toString().toCharArray();
+        int m = s.length, n = t.length;
+        int[] tmp = new int[m + n];
+        //无进位相乘并相加
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                tmp[i + j] += (s[i] - '0') * (t[j] - '0');
+            }
+        }
+        //处理进位
+        int c = 0;
+        StringBuilder ret = new StringBuilder();
+        for (int x : tmp) {
+            c += x;
+            ret.append((char)(c % 10 + '0'));
+            c /= 10;
+        }
+        while (c != 0) {
+            ret.append((char)(c % 10 + '0'));
+            c /= 10;
+        }
+        //处理前导零
+        while (ret.length() > 1 && ret.charAt(ret.length() - 1) == '0') {
+            ret.deleteCharAt(ret.length() - 1);
+        }
+        return ret.reverse().toString();
+    }
+
 
 
 
