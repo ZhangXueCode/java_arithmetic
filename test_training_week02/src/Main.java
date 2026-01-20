@@ -146,5 +146,59 @@ public class Main {
 //        }
 //        System.out.print(dp[n][m]);
 //    }
+    //Day-09
+    //添加逗号
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        long n = in.nextLong();
+//        StringBuilder ret = new StringBuilder();
+//        String s = String.valueOf(n);
+//        int tmp = 0;
+//        for(int j = s.length() - 1;j >= 0;j--) {
+//            tmp++;
+//            ret.append(s.charAt(j));
+//            if(tmp % 3 == 0) {
+//                ret.append(",");
+//            }
+//        }
+//        if(ret.charAt(ret.length() - 1) == ',') {
+//            ret.deleteCharAt(ret.length() - 1);
+//        }
+//
+//        System.out.print(ret.reverse().toString());
+//    }
+    //跳台阶
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int a = 1, b = 1, c = 0;
+//        for(int i = 2; i <= n; i++) {
+//            c = a + b;
+//            a = b;
+//            b = c;
+//        }
+//        if(n == 1) {
+//            System.out.println(n);
+//        }
+//        else {
+//            System.out.println(c);
+//        }
+//    }
+    //找顺子
+    public boolean IsContinuous (int[] numbers) {
+        boolean[] hash = new boolean[14];
+        int min = 14,max = 0;
+        for(int x :numbers) {
+            if(x != 0) {
+                if(hash[x]) {
+                    return false;
+                }
+                hash[x] = true;
+                min = Math.min(min,x);
+                max = Math.max(max,x);
+            }
+        }
+        return max - min <= 4;
+    }
 
 }
